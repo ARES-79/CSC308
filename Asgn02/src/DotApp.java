@@ -4,8 +4,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +15,7 @@ import java.util.List;
  * @version 1.0
  * DotApp Class - a dot plotting GUI with cluster and line capabilities
  */
-public class DotApp extends JFrame implements ActionListener, ItemListener {
+public class DotApp extends JFrame implements ActionListener {
     DrawArea center;
     JCheckBox cluster;
     JCheckBox line;
@@ -44,7 +42,7 @@ public class DotApp extends JFrame implements ActionListener, ItemListener {
         //west
         JPanel selectionPanel = new JPanel();
         cluster = new JCheckBox("Cluster - K-means");
-        line = new JCheckBox("Line - NearestNeighbor");
+        line = new JCheckBox("Line - Nearest Neighbor");
         JButton run = new JButton("Run");
         selectionPanel.setLayout(new GridLayout(6, 1));
         selectionPanel.add(cluster);
@@ -60,8 +58,8 @@ public class DotApp extends JFrame implements ActionListener, ItemListener {
         center.setOpaque(true);
 
         //listeners
-        cluster.addItemListener(this);
-        line.addItemListener(this);
+        cluster.addActionListener(this);
+        line.addActionListener(this);
         run.addActionListener(this);
 
     }
@@ -69,27 +67,24 @@ public class DotApp extends JFrame implements ActionListener, ItemListener {
     /**
      * actionPerformed - implementation from ActionListener interface
      *      provides interactivity for the Dot App elements
+     *      also logs what is the user is doing
      * @param e ActionEvent notifying that a screen item has been selected
      */
     @Override
     public void actionPerformed(ActionEvent e) {
         System.out.println(e.getActionCommand());
-        if (e.getActionCommand().equals("Run")){
-            center.compute();
+
+        if (!e.getActionCommand().equals("Run"))
+            System.out.println(((JCheckBox)e.getSource()).isSelected() ) ;
+        else{
+            List<String> options = new ArrayList<>();
+            if (cluster.isSelected())
+                options.add("Cluster");
+            if (line.isSelected())
+                options.add("Line");
+            center.setOptionsSelected(options);
+            //Call method to perform desired operations
         }
     }
 
-    @Override
-    public void itemStateChanged(ItemEvent e) {
-        Object source = e.getItemSelectable();
-        System.out.println("Cluster: " + cluster.isSelected());
-        System.out.println("Line: " + line.isSelected());
-        System.out.println("_________");
-        List<String> options = new ArrayList<>();
-        if(cluster.isSelected())
-            options.add("Cluster");
-        if (line.isSelected())
-            options.add("Line");
-        center.setOptionsSelected(options);
-    }
 }
