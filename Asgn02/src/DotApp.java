@@ -55,7 +55,7 @@ public class DotApp extends JFrame implements ActionListener, ItemListener {
         //center
         center = new DrawArea();
         add(center, BorderLayout.CENTER);
-        center.setBackground(Color.GRAY);
+        center.setBackground(Color.ORANGE);
         center.setVisible(true);
         center.setOpaque(true);
 
@@ -74,6 +74,9 @@ public class DotApp extends JFrame implements ActionListener, ItemListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         System.out.println(e.getActionCommand());
+        if (e.getActionCommand().equals("Run")){
+            center.compute();
+        }
     }
 
     @Override
