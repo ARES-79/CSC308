@@ -15,17 +15,19 @@ import java.util.List;
  * @version 1.0
  * DrawArea Class - a dot plotting panel section of a GUI
  */
-public class DrawArea extends JPanel implements MouseListener {
-
-    private List<Dot> data = new ArrayList<>();
-    List<String> optionsSelected = new ArrayList<>();
+public class DrawArea extends JPanel implements MouseListener, MyObserver {
+    //private List<Dot> data = new ArrayList<>();
+    private DotStorage storage = DotStorage.getStorage();
+    private List<String> optionsSelected = new ArrayList<>();
+    private boolean lines = false;
 
     /**
      * DrawArea constructor
-     * Uses inheritance from JPanel to create a panel that is notified about mouse actions.
+     * Uses inheritance from JPanel to create a panel that is notified about mouse actions. Also adds itself as an observer to storage
      */
     public DrawArea(){
         addMouseListener(this);
+        storage.addObserver(this);
     }
 
     /**
@@ -43,9 +45,20 @@ public class DrawArea extends JPanel implements MouseListener {
     @Override
     public void paintComponent(Graphics g){
         super.paintComponent(g);
-        for (Dot city: data){
+        for (Dot city: storage.getData()){
             city.drawDot(g);
         }
+        if (lines){
+            drawLines(g);
+        }
+    }
+
+    /**
+     * compute - function to use a DotOperationHandler to create and run a thread which performs the operations
+     */
+    public void compute(){
+        DotOperationHandler DOH = new DotOperationHandler(optionsSelected);
+        DOH.run();
     }
 
     /**
@@ -54,10 +67,10 @@ public class DrawArea extends JPanel implements MouseListener {
      * @param g - Graphics object used to create what is shown on screen
      */
     public void drawLines(Graphics g){
-        g.setColor(Color.ORANGE);
-        for(int i = 0; i < data.size()-1; i++){
-            g.drawLine(data.get(i).getX_coord(), data.get(i).getY_coord(),
-                        data.get(i+1).getX_coord(), data.get(i+1).getY_coord());
+        g.setColor(Color.gray);
+        for(int i = 0; i < storage.getData().size()-1; i++){
+            g.drawLine(storage.getData().get(i).getX_coord(), storage.getData().get(i).getY_coord(),
+                    storage.getData().get(i+1).getX_coord(), storage.getData().get(i+1).getY_coord());
         }
     }
 
@@ -68,7 +81,7 @@ public class DrawArea extends JPanel implements MouseListener {
     @Override
     public void mousePressed(MouseEvent e) {
         System.out.println("(" + e.getX() + ", " + e.getY() + ")");
-        data.add(new Dot(e.getX(), e.getY(), Color.BLACK));
+        storage.getData().add(new Dot(e.getX(), e.getY(), Color.BLACK));
         repaint();
     }
 
@@ -80,4 +93,14 @@ public class DrawArea extends JPanel implements MouseListener {
     public void mouseEntered(MouseEvent e) {}
     @Override
     public void mouseExited(MouseEvent e) {}
+
+    /**
+     * update - overridden method used receive a notification that the observable has been updated
+     * @param ob - MyObservable which represents the observable object which has been updated
+     */
+    @Override
+    public void update(MyObservable ob) {
+        lines = true;
+        repaint();
+    }
 }
