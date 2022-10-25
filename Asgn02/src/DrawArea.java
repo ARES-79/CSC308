@@ -16,10 +16,8 @@ import java.util.List;
  * DrawArea Class - a dot plotting panel section of a GUI
  */
 public class DrawArea extends JPanel implements MouseListener, MyObserver {
-    //private List<Dot> data = new ArrayList<>();
     private DotStorage storage = DotStorage.getStorage();
     private List<String> optionsSelected = new ArrayList<>();
-    private boolean lines = false;
 
     /**
      * DrawArea constructor
@@ -48,7 +46,7 @@ public class DrawArea extends JPanel implements MouseListener, MyObserver {
         for (Dot city: storage.getData()){
             city.drawDot(g);
         }
-        if (lines){
+        if (optionsSelected.contains("Line")){
             drawLines(g);
         }
     }
@@ -68,9 +66,9 @@ public class DrawArea extends JPanel implements MouseListener, MyObserver {
      */
     public void drawLines(Graphics g){
         g.setColor(Color.gray);
-        for(int i = 0; i < storage.getData().size()-1; i++){
-            g.drawLine(storage.getData().get(i).getX_coord(), storage.getData().get(i).getY_coord(),
-                    storage.getData().get(i+1).getX_coord(), storage.getData().get(i+1).getY_coord());
+        for(int i = 1; i < storage.getData().size() && storage.getData().get(i).isLine(); i++) {
+            g.drawLine(storage.getData().get(i-1).getX_coord(), storage.getData().get(i-1).getY_coord(),
+                    storage.getData().get(i).getX_coord(), storage.getData().get(i).getY_coord());
         }
     }
 
@@ -100,7 +98,6 @@ public class DrawArea extends JPanel implements MouseListener, MyObserver {
      */
     @Override
     public void update(MyObservable ob) {
-        lines = true;
         repaint();
     }
 }

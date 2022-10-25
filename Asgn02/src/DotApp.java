@@ -74,15 +74,18 @@ public class DotApp extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         System.out.println(e.getActionCommand());
 
-        if (!e.getActionCommand().equals("Run"))
-            System.out.println(((JCheckBox)e.getSource()).isSelected() ) ;
-        else{
-            List<String> options = new ArrayList<>();
-            if (cluster.isSelected())
+        List<String> options = new ArrayList<>();
+        if (!e.getActionCommand().equals("Run")) {
+            System.out.println(((JCheckBox) e.getSource()).isSelected());
+        } else{
+            if (cluster.isSelected()) {
                 options.add("Cluster");
-            if (line.isSelected())
+            }
+            if (line.isSelected()) {
                 options.add("Line");
+            }
             center.setOptionsSelected(options);
+            center.compute();
             //Call method to perform desired operations
         }
     }
