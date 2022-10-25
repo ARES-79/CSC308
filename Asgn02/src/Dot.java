@@ -2,6 +2,10 @@ package Asgn02.src;
 
 import java.awt.*;
 
+
+
+
+
 /**
  * Assignment 02
  * @author Andrew Estrada
@@ -11,10 +15,10 @@ import java.awt.*;
  * Dot Class - a class for storing and communicating info about items on the GUI window
  */
 public class Dot {
-
     private int x_coord;
     private int y_coord;
     private Color color;
+    private boolean line;
     private static final int dotRadius = 7;
 
     /**
@@ -27,6 +31,24 @@ public class Dot {
         this.x_coord = x;
         this.y_coord = y;
         this.color = color;
+        this.line = false;
+    }
+
+    /**
+     * setLine - setter for the line for a city
+     *     has been drawn
+     * @param line - boolean
+     */
+    public void setLine(boolean line) {
+        this.line = line;
+    }
+
+    /**
+     * isLine - indicates if the line has been drawn
+     * @return boolean
+     */
+    public boolean isLine() {
+        return line;
     }
 
     /**
