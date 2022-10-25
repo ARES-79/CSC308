@@ -83,6 +83,7 @@ public class DotApp extends JFrame implements ActionListener {
             if (line.isSelected())
                 options.add("Line");
             center.setOptionsSelected(options);
+            center.compute();
             //Call method to perform desired operations
         }
     }

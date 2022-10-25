@@ -48,7 +48,7 @@ public class DrawArea extends JPanel implements MouseListener, MyObserver {
         for (Dot city: storage.getData()){
             city.drawDot(g);
         }
-        if (lines){
+        if (optionsSelected.contains("Line")){
             drawLines(g);
         }
     }
@@ -68,7 +68,7 @@ public class DrawArea extends JPanel implements MouseListener, MyObserver {
      */
     public void drawLines(Graphics g){
         g.setColor(Color.gray);
-        for(int i = 0; i < storage.getData().size()-1; i++){
+        for(int i = 0; i < storage.getData().size()-1  && storage.getData().get(i).getLine(); i++){
             g.drawLine(storage.getData().get(i).getX_coord(), storage.getData().get(i).getY_coord(),
                     storage.getData().get(i+1).getX_coord(), storage.getData().get(i+1).getY_coord());
         }
