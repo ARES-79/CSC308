@@ -7,10 +7,13 @@ import java.awt.*;
  * Assignment 03
  * @author Andrew Estrada
  * @version 1.0
- * Tile - class in charge of containing data of
+ * Tile - class in charge of containing data of a cell on the board
  */
 public class Tile extends JButton {
 
+    /**
+     * TileType - info about the kind of cell
+     */
     enum TileType{
         DEFAULT,
         WATER,
@@ -18,6 +21,9 @@ public class Tile extends JButton {
         SUNK
     }
 
+    /**
+     * ShotType - info about a shot made on the cell
+     */
     enum ShotType{
         DEFAULT,
         HIT,
@@ -35,6 +41,10 @@ public class Tile extends JButton {
     ShotType shot;
     int index;
 
+    /**
+     * Tile Constructor
+     * @param index - index of the tile on the board / in a tile list
+     */
     public Tile(int index){
         super();
         this.index = index;
@@ -45,27 +55,27 @@ public class Tile extends JButton {
         addActionListener(Controller.getInstance());
     }
 
-    public TileType getTileType() {
-        return tileType;
-    }
+    //various getters
+    public TileType getTileType() {return tileType;}
+    public ShotType getShot() {return shot;}
+    public int getIndex() {return index;}
 
-    public ShotType getShot() {
-        return shot;
-    }
-
-    public int getIndex() {
-        return index;
-    }
-
+    //necessary setters
     public void setTileType(TileType tileType) {this.tileType = tileType;}
-
     public void setShot(ShotType shot) {this.shot = shot;}
 
+    /**
+     * updateView - changes the look of a tile
+     *  to be used when something is changed or clicked, etc.
+     */
     public void updateView(){
         updateColor();
         updateText();
     }
 
+    /**
+     * updateText - updateView helper related to shots
+     */
     public void updateText(){
         switch(shot){
             case DEFAULT:
@@ -80,6 +90,9 @@ public class Tile extends JButton {
         }
     }
 
+    /**
+     * updateColor - updateView helper related to tile type
+     */
     public void updateColor(){
         switch(tileType){
             case DEFAULT:
