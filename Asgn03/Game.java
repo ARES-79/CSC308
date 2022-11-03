@@ -21,7 +21,7 @@ public class Game extends JFrame implements ActionListener {
      */
     public static void main(String[]args){
         Game window = new Game();
-        window.setSize(900,500);
+        window.setSize(500, 900);
         window.setVisible(true);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
@@ -38,15 +38,20 @@ public class Game extends JFrame implements ActionListener {
         JMenuBar menuBar = new JMenuBar();
         JMenu edit = new JMenu("Edit");
         JMenuItem undo = new JMenuItem("Undo");
-        JMenuItem erase = new JMenuItem("Erase");
+        JMenuItem reset = new JMenuItem("Reset");
         setJMenuBar(menuBar);
 
         menuBar.add(edit);
         edit.add(undo);
-        edit.add(erase);
+        edit.add(reset);
 
-        //
-
+        //center
+        setLayout(new GridLayout(2,1));
+        //the two JLabels will be changed to Board Panels
+        JLabel shootScreen = new JLabel("This will be the shooting screen.");
+        JLabel shipScreen = new JLabel("This will be the ship-placing screen.");
+        add(shootScreen);
+        add(shipScreen);
 
     }
 
