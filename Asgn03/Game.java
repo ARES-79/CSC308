@@ -1,8 +1,5 @@
 package Asgn03;
 
-import Asgn02.src.DotApp;
-import Asgn02.src.DrawArea;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
