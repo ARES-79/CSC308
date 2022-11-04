@@ -50,12 +50,23 @@ public class Game extends JFrame {
         //the two JLabels will be changed to Board Panels
         JLabel shootScreen = new JLabel("This will be the shooting screen.");
         JPanel shipScreen = new JPanel();
-        shipScreen.setLayout(new GridLayout(10,10, -1, -1));
+        shipScreen.setLayout(new GridLayout(11,11, -1, -1));
         shipScreen.setBorder(BorderFactory.createEmptyBorder(2,2,2,2));
         List<Tile> tileList = new ArrayList<>();
-        for(int i = 0; i<100; i++){
-            tileList.add(new Tile(i));
-            shipScreen.add(tileList.get(i));
+        shipScreen.add(new JLabel(""));
+        int value = 0;
+        for(int i = 1; i<121; i++) {
+            if (i < 11)
+                shipScreen.add(new JLabel("     " + String.valueOf(i)));
+            else if (i % 11 == 0){
+                int alpha = (i%10 == 0) ? 10 : i%10;
+                shipScreen.add(new JLabel("   " + Character.toString((char) (alpha + 64))));
+            }
+            else{
+                tileList.add(new Tile(value));
+                value +=1;
+                shipScreen.add(tileList.get(tileList.size() -1));
+            }
         }
         add(shootScreen);
         add(shipScreen);
