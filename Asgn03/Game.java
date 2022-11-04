@@ -1,8 +1,5 @@
 package Asgn03;
 
-import Asgn02.src.DotApp;
-import Asgn02.src.DrawArea;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -17,6 +14,8 @@ import java.util.ArrayList;
  * Game Class - battleship app with GUI and functionality
  */
 public class Game extends JFrame {
+    MyBoard myBoard = new MyBoard();
+    YourBoard yourBoard;
 
     /**
      * Main creates a new battleship window and allows it to be seen and closed properly.
@@ -53,20 +52,35 @@ public class Game extends JFrame {
         //the two JLabels will be changed to Board Panels
         JLabel shootScreen = new JLabel("This will be the shooting screen.");
         JPanel shipScreen = new JPanel();
-        shipScreen.setLayout(new GridLayout(10,10, -1, -1));
+        shipScreen.setLayout(new GridLayout(11,11, -1, -1));
         shipScreen.setBorder(BorderFactory.createEmptyBorder(2,2,2,2));
-        List<Tile> tileList = new ArrayList<>();
-        for(int i = 0; i<100; i++){
-            tileList.add(new Tile(i));
-            shipScreen.add(tileList.get(i));
+
+        //List<Tile> tileList = new ArrayList<>();
+
+        shipScreen.add(new JLabel(""));
+        int value = 0;
+        for(int i = 1; i<121; i++) {
+            if (i < 11)
+                shipScreen.add(new JLabel("     " + String.valueOf(i)));
+            else if (i % 11 == 0){
+                int alpha = (i%10 == 0) ? 10 : i%10;
+                shipScreen.add(new JLabel("   " + Character.toString((char) (alpha + 64))));
+            }
+            else{
+                myBoard.addTile(new Tile(value));
+                value +=1;
+                shipScreen.add(myBoard.getMyTiles().get(myBoard.getMyTiles().size() -1));
+            }
         }
+
+
         add(shootScreen);
         add(shipScreen);
 
-        tileList.get(55).setTileType(Tile.TileType.SHIP);
-        tileList.get(55).updateView();
-        tileList.get(5).setShot(Tile.ShotType.MISS);
-        tileList.get(5).updateView();
+        myBoard.getMyTiles().get(55).setTileType(Tile.TileType.SHIP);
+        myBoard.getMyTiles().get(55).updateView();
+        myBoard.getMyTiles().get(5).setShot(Tile.ShotType.MISS);
+        myBoard.getMyTiles().get(5).updateView();
 
     }
 
