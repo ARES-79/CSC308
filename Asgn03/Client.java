@@ -6,7 +6,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
-public class Client {
+public class Client{
     private Socket clientSocket;
     private PrintWriter out;
     private BufferedReader in;
@@ -18,10 +18,9 @@ public class Client {
         System.out.println("Connection Established");
     }
 
-    public String sendMessage(String msg) throws IOException {
+    public void sendMessage(String msg) throws IOException {
         out.println(msg);System.out.println("message sent");
         String resp = in.readLine();
-        return resp;
     }
 
     public void stopConnection() throws IOException {
@@ -31,9 +30,12 @@ public class Client {
     }
 
     public static void main(String[] args) throws IOException {
+//        Game window = new Game(ClientServerEnum.SERVER);
+//        window.setSize(1000, 600);
+//        window.setVisible(true);
+//        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Client client=new Client();
         client.startConnection("127.0.0.1", 6666);
-        String res = client.sendMessage("Hello");
-        System.out.println(res);
+        client.sendMessage("Exit");
     }
 }

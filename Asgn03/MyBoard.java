@@ -12,9 +12,11 @@ import java.util.List;
 public class MyBoard extends BoardPanel implements MouseListener {
     ArrayList<Tile> myTiles;
     Boolean ships = true;
+    ClientServerEnum type;
 
-    public MyBoard() {
+    public MyBoard(ClientServerEnum type) {
         myTiles = new ArrayList<>();
+        this.type = type;
         addMouseListener(this);
 //        for(int i = 0; i<size; i++){
 //            myTiles.add(new Tile(i));

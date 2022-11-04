@@ -14,17 +14,17 @@ import java.util.ArrayList;
  * Game Class - battleship app with GUI and functionality
  */
 public class Game extends JFrame {
-    MyBoard myBoard = new MyBoard();
+    MyBoard myBoard;
     YourBoard yourBoard;
 
     /**
      * Main creates a new battleship window and allows it to be seen and closed properly.
      */
     public static void main(String[]args){
-        Game window = new Game();
-        window.setSize(1000, 600);
-        window.setVisible(true);
-        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        Game window = new Game();
+//        window.setSize(1000, 600);
+//        window.setVisible(true);
+//        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
     /**
@@ -32,9 +32,10 @@ public class Game extends JFrame {
      * Uses inheritance from JFrame to create a window with the elements
      * necessary for a GUI with battleship functionality.
      */
-    public Game(){
-        super("BattleShip App");
+    public Game(ClientServerEnum type){
+        super(String.valueOf(type));
         Controller controller = new Controller();
+        this.myBoard = new MyBoard(type);
 
         //menu
         JMenuBar menuBar = new JMenuBar();
