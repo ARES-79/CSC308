@@ -61,4 +61,9 @@ public class MyBoard extends BoardPanel implements MouseListener {
     public void mouseExited(MouseEvent e) {
 
     }
+
+    @Override
+    public void update(MyObservable ob) {
+
+    }
 }

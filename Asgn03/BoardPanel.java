@@ -7,7 +7,7 @@ import org.w3c.dom.views.AbstractView;
 import javax.swing.*;
 import java.awt.*;
 
-public class BoardPanel extends JPanel { //implements MouseEvent
+public class BoardPanel extends JPanel implements MyObserver { //implements MouseEvent
 
 
     public BoardPanel() {
@@ -19,4 +19,8 @@ public class BoardPanel extends JPanel { //implements MouseEvent
         super.paintComponent(g);
     }
 
+    @Override
+    public void update(MyObservable ob) {
+
+    }
 }

@@ -14,6 +14,8 @@ import java.util.List;
  */
 public class Blackboard extends MyObservable {
     private List<Tile> tileList = new ArrayList<>();
+    private MyBoard myBoard = new MyBoard();
+    private YourBoard yourBoard;
     private static Blackboard blackboard;
 
     /**
@@ -38,9 +40,17 @@ public class Blackboard extends MyObservable {
         return tileList;
     }
 
+    public MyBoard getMyBoard() {
+        return myBoard;
+    }
+
+    public YourBoard getYourBoard() {
+        return yourBoard;
+    }
+
     /**
      * updateData - calls notifying which then updates all the observers
-     */
+    */
     public void updateData(){
         notifying();
     }
