@@ -41,10 +41,14 @@ public class Blackboard extends MyObservable {
         return myTileList;
     }
 
+    public void addTile(Tile t) {myTileList.add(t);}
+
+
     /**
      * updateData - calls notifying which then updates all the observers
     */
     public void updateData(){
         notifying();
     }
+
 }
