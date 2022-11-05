@@ -1,6 +1,5 @@
 package Asgn03;
 
-import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -13,21 +12,21 @@ import java.awt.event.ActionListener;
  *          responsible for connecting the view and the model
  *          Singleton pattern
  */
-public class Controller implements ActionListener {
+public class MyBoardController implements ActionListener {
 
-    private static Controller controller;
+    private static MyBoardController myBoardController;
 
-    protected Controller(){}
+    protected MyBoardController(){}
 
     /**
      * Singleton Pattern getInstance()
      * @return static Controller instance
      */
-    public static Controller getInstance(){
-        if (controller == null){
-            controller = new Controller();
+    public static MyBoardController getInstance(){
+        if (myBoardController == null){
+            myBoardController = new MyBoardController();
         }
-        return controller;
+        return myBoardController;
     }
 
     /**
