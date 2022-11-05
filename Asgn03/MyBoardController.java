@@ -52,16 +52,15 @@ public class MyBoardController implements ActionListener {
         if (e.getSource() instanceof Tile && numShipTiles > 0){
             //prints out which tile was clicked
             Tile temp = (Tile) e.getSource();
-            System.out.println(
-                    "index: " + temp.getIndex() +
-                    " type: " + temp.getTileType() +
-                    " shot: " + temp.getShot());
+            System.out.println(temp);
 
             //placing ships on the screen
             if (((Tile) e.getSource()).tileType != Tile.TileType.SHIP) {
                 Tile t = (Tile)e.getSource();
-                t.setTileType(Tile.TileType.SHIP);
+                Blackboard.getBlackboard().getTileList().get(t.getIndex()).setTileType(Tile.TileType.SHIP);
                 numShipTiles -= 1;
+                System.out.println(Blackboard.getBlackboard().getTileList().get(t.getIndex()));
+                System.out.println("Updating view");
                 Blackboard.getBlackboard().getTileList().get(t.getIndex()).updateView();
 
                 shipTiles.add(t);

@@ -45,7 +45,7 @@ public class Game extends JFrame {
         //center
         setLayout(new GridLayout(1,2));
         //the two JLabels will be changed to Board Panels
-        JLabel shootScreen = new JLabel("This will be the shooting screen.");
+        JPanel shootScreen = new OpponentBoard();
         JPanel shipScreen = new JPanel();
         shipScreen.setLayout(new GridLayout(11,11, -1, -1));
         shipScreen.setBorder(BorderFactory.createEmptyBorder(2,2,2,2));
@@ -65,6 +65,7 @@ public class Game extends JFrame {
                 Blackboard.getBlackboard().addTile(new Tile(value));
                 value +=1;
                 shipScreen.add(Blackboard.getBlackboard().getTileList().get(Blackboard.getBlackboard().getTileList().size() -1));
+                Blackboard.getBlackboard().getTileList().get(Blackboard.getBlackboard().getTileList().size() -1).addActionListener(MyBoardController.getInstance());
             }
         }
 
@@ -72,8 +73,8 @@ public class Game extends JFrame {
         add(shootScreen);
         add(shipScreen);
 
-        Blackboard.getBlackboard().getTileList().get(55).setTileType(Tile.TileType.SHIP);
-        Blackboard.getBlackboard().getTileList().get(55).updateView();
+//        Blackboard.getBlackboard().getTileList().get(55).setTileType(Tile.TileType.SHIP);
+//        Blackboard.getBlackboard().getTileList().get(55).updateView();
 //        myBoard.getMyTiles().get(5).setShot(Tile.ShotType.MISS);
 //        myBoard.getMyTiles().get(5).updateView();
 

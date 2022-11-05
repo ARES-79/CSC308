@@ -27,7 +27,29 @@ public class MyBoard extends BoardPanel {
 
     //connection between what person is seeing and what is stored in data
 
-    public MyBoard() {}
+    public MyBoard() {
+//        setLayout(new GridLayout(11,11, -1, -1));
+//        setBorder(BorderFactory.createEmptyBorder(2,2,2,2));
+//
+//        //List<Tile> tileList = new ArrayList<>();
+//
+//        add(new JLabel(""));
+//        int value = 0;
+//        for(int i = 1; i<121; i++) {
+//            if (i < 11)
+//                add(new JLabel("     " + i));
+//            else if (i % 11 == 0){
+//                int alpha = (i%10 == 0) ? 10 : i%10;
+//                add(new JLabel("   " + Character.toString((char) (alpha + 64))));
+//            }
+//            else{
+//                Blackboard.getBlackboard().addTile(new Tile(value));
+//                value +=1;
+//                add(Blackboard.getBlackboard().getTileList().get(Blackboard.getBlackboard().getTileList().size() -1));
+////                Blackboard.getBlackboard().getTileList().get(Blackboard.getBlackboard().getTileList().size() -1).addActionListener(MyBoardController.getInstance());
+//            }
+//        }
+    }
 
 
 //        for(int i = 0; i<size; i++){
