@@ -2,10 +2,6 @@ package Asgn03;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.List;
-import java.util.ArrayList;
 
 /**
  * Assignment 03
@@ -15,7 +11,7 @@ import java.util.ArrayList;
  */
 public class Game extends JFrame {
     private MyBoard myBoard = new MyBoard();
-    private YourBoard yourBoard;
+    private OpponentBoard opponentBoard = new OpponentBoard();
     /**
      * Main creates a new battleship window and allows it to be seen and closed properly.
      */

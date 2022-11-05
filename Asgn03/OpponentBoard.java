@@ -4,8 +4,8 @@ import javax.swing.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-public class YourBoard extends BoardPanel implements MouseListener {
-    public YourBoard(JPanel screen) {
+public class OpponentBoard extends BoardPanel implements MouseListener {
+    public OpponentBoard() {
     }
 
     @Override
