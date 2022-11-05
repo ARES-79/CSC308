@@ -29,7 +29,7 @@ public class Game extends JFrame {
      */
     public Game(){
         super("BattleShip App");
-        Controller controller = new Controller();
+        MyBoardController myBoardController = new MyBoardController();
 
         //menu
         JMenuBar menuBar = new JMenuBar();
@@ -62,9 +62,9 @@ public class Game extends JFrame {
                 shipScreen.add(new JLabel("   " + Character.toString((char) (alpha + 64))));
             }
             else{
-                myBoard.addTile(new Tile(value));
+                Blackboard.getBlackboard().addTile(new Tile(value));
                 value +=1;
-                shipScreen.add(myBoard.getMyTiles().get(myBoard.getMyTiles().size() -1));
+                shipScreen.add(Blackboard.getBlackboard().getTileList().get(Blackboard.getBlackboard().getTileList().size() -1));
             }
         }
 
@@ -72,10 +72,10 @@ public class Game extends JFrame {
         add(shootScreen);
         add(shipScreen);
 
-        myBoard.getMyTiles().get(55).setTileType(Tile.TileType.SHIP);
-        myBoard.getMyTiles().get(55).updateView();
-        myBoard.getMyTiles().get(5).setShot(Tile.ShotType.MISS);
-        myBoard.getMyTiles().get(5).updateView();
+        Blackboard.getBlackboard().getTileList().get(55).setTileType(Tile.TileType.SHIP);
+        Blackboard.getBlackboard().getTileList().get(55).updateView();
+//        myBoard.getMyTiles().get(5).setShot(Tile.ShotType.MISS);
+//        myBoard.getMyTiles().get(5).updateView();
 
     }
 
