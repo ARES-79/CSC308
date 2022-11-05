@@ -14,8 +14,8 @@ import java.util.ArrayList;
  * Game Class - battleship app with GUI and functionality
  */
 public class Game extends JFrame {
-
-
+    private MyBoard myBoard = new MyBoard();
+    private YourBoard yourBoard;
     /**
      * Main creates a new battleship window and allows it to be seen and closed properly.
      */
@@ -66,9 +66,9 @@ public class Game extends JFrame {
                 shipScreen.add(new JLabel("   " + Character.toString((char) (alpha + 64))));
             }
             else{
-                Blackboard.getBlackboard().getMyBoard().addTile(new Tile(value));
+                myBoard.addTile(new Tile(value));
                 value +=1;
-                shipScreen.add(Blackboard.getBlackboard().getMyBoard().getMyTiles().get(Blackboard.getBlackboard().getMyBoard().getMyTiles().size() -1));
+                shipScreen.add(myBoard.getMyTiles().get(myBoard.getMyTiles().size() -1));
             }
         }
 
@@ -76,10 +76,10 @@ public class Game extends JFrame {
         add(shootScreen);
         add(shipScreen);
 
-        Blackboard.getBlackboard().getMyBoard().getMyTiles().get(55).setTileType(Tile.TileType.SHIP);
-        Blackboard.getBlackboard().getMyBoard().getMyTiles().get(55).updateView();
-        Blackboard.getBlackboard().getMyBoard().getMyTiles().get(5).setShot(Tile.ShotType.MISS);
-        Blackboard.getBlackboard().getMyBoard().getMyTiles().get(5).updateView();
+        myBoard.getMyTiles().get(55).setTileType(Tile.TileType.SHIP);
+        myBoard.getMyTiles().get(55).updateView();
+        myBoard.getMyTiles().get(5).setShot(Tile.ShotType.MISS);
+        myBoard.getMyTiles().get(5).updateView();
 
     }
 
