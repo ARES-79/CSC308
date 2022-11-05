@@ -47,12 +47,14 @@ public class Tile extends JButton {
      */
     public Tile(int index){
         super();
+        super.setContentAreaFilled(false);
         this.index = index;
         tileType = TileType.DEFAULT;
         shot = ShotType.DEFAULT;
         setBorder(BorderFactory.createLineBorder(Color.BLACK));
         setOpaque(true);
-        addActionListener(Controller.getInstance());
+        addActionListener(MyBoardController.getInstance());
+
     }
 
     //various getters
