@@ -24,8 +24,8 @@ public class Server implements Runnable {
 
             ServerDTO inputObject = null;
             while ((inputObject = (ServerDTO) in.readObject()) != null) {
-                System.out.println(inputObject.getMessage());
-                Tile temp = blackboard.getTileList().get(3);
+                System.out.println(inputObject.getMessage() + inputObject.getTileIndex());
+                Tile temp = blackboard.getTileList().get(inputObject.getTileIndex());
                 temp.setShot(Tile.ShotType.HIT);
                 temp.updateView();
             }
