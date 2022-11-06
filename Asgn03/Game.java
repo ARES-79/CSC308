@@ -30,7 +30,7 @@ public class Game extends JFrame {
      * necessary for a GUI with battleship functionality.
      */
 
-    public Game(Client client, String player){
+    public Game(Client client, Server server, String player){
         super(player);
         this.client = client;
         MyBoardController myBoardController = new MyBoardController();
