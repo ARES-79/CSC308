@@ -7,8 +7,8 @@ import java.net.Socket;
 public class Server implements Runnable {
     private ServerSocket serverSocket;
     private Socket clientSocket;
-    private PrintWriter out;
-    private BufferedReader in;
+    private ObjectOutputStream out;
+    private ObjectInputStream in;
     private int port;
 
     public Server(int port) {
@@ -19,18 +19,12 @@ public class Server implements Runnable {
         try {
             serverSocket = new ServerSocket(this.port);
             clientSocket = serverSocket.accept();
-            out = new PrintWriter(clientSocket.getOutputStream(), true);
-            in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+            out = new ObjectOutputStream(clientSocket.getOutputStream());
+            in = new ObjectInputStream(clientSocket.getInputStream());
 
-            String inputLine;
-            while ((inputLine = in.readLine()) != null) {
-                if ("Exit".equals(inputLine)) {
-                    out.println("good bye");
-                    System.out.println("Exiting");
-                    break;
-                }
-                out.println(inputLine);
-                System.out.println(inputLine);
+            ServerDTO inputObject = null;
+            while ((inputObject = (ServerDTO) in.readObject()) != null) {
+                System.out.println(inputObject.getMessage());
             }
         } catch (Exception e) {
             e.printStackTrace();

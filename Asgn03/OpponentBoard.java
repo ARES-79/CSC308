@@ -109,7 +109,8 @@ public class OpponentBoard extends BoardPanel implements ActionListener {
                 else{
                     temp.setShot(Tile.ShotType.HIT);
                     try {
-                        client.sendMessage("Ship from has been hit");
+                        ServerDTO data = new ServerDTO("Tile was hit", 0);
+                        client.sendObject(data);
                     } catch (IOException ex) {
                         ex.printStackTrace();
                     }

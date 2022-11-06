@@ -1,15 +1,12 @@
 package Asgn03;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.Socket;
 
 public class Client implements Runnable {
     private Socket clientSocket;
-    private PrintWriter out;
-    private BufferedReader in;
+    private ObjectOutputStream out;
+    private ObjectInputStream in;
     private String ip;
     private int port;
 
@@ -27,8 +24,8 @@ public class Client implements Runnable {
         while (scanning) {
             try {
                 clientSocket = new Socket(this.ip, this.port);
-                out = new PrintWriter(clientSocket.getOutputStream(), true);
-                in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+                out = new ObjectOutputStream(clientSocket.getOutputStream());
+                in = new ObjectInputStream(clientSocket.getInputStream());
                 scanning = false;
                 System.out.println("Connection Established");
                 notify();
@@ -43,10 +40,9 @@ public class Client implements Runnable {
         }
     }
 
-    public void sendMessage(String msg) throws IOException {
-        out.println(msg);
+    public void sendObject(ServerDTO data) throws IOException {
+        out.writeObject(data);
         System.out.println("message sent");
-        String resp = in.readLine();
     }
 
     public void stopConnection() throws IOException {
