@@ -4,11 +4,15 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.List;
 import java.util.ArrayList;
 
+/**
+ * Assignment 03
+ * @author Andrew Estrada
+ * @version 1.0
+ * OpponentBoard - class in charge of functionality of attempting to shoot the opponent
+ */
 public class OpponentBoard extends BoardPanel implements ActionListener {
 
     List<Tile> enemyWaters = new ArrayList<>();
@@ -16,6 +20,9 @@ public class OpponentBoard extends BoardPanel implements ActionListener {
     //test code to prove concept
     boolean updated = false;
 
+    /**
+     * OpponentBoard constructor - sets up the game panel
+     */
     public OpponentBoard() {
         setLayout(new GridLayout(11,11, -1, -1));
         setBorder(BorderFactory.createEmptyBorder(2,2,2,2));
@@ -30,7 +37,7 @@ public class OpponentBoard extends BoardPanel implements ActionListener {
             }
             else if (i % 11 == 0){
                 int alpha = (i%10 == 0) ? 10 : i%10;
-                add(new JLabel("   " + Character.toString((char) (alpha + 64))));
+                add(new JLabel("   " + (char) (alpha + 64)));
             }
             else{
                 enemyWaters.add(new Tile(value));
@@ -73,6 +80,11 @@ public class OpponentBoard extends BoardPanel implements ActionListener {
         }
     }
 
+    /**
+     * actionPerformed - implementation from ActionListener interface
+     *      provides functionality for tile objects within the board
+     * @param e - ActionEvent notifying that a screen item has been selected
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() instanceof Tile) {
@@ -101,10 +113,15 @@ public class OpponentBoard extends BoardPanel implements ActionListener {
         }
     }
 
+    /**
+     * update - Changes the list of enemy ships when they are sent over to check shots later
+     * @param ob - blackboard object that has been updated
+     */
     @Override
     public void update(MyObservable ob) {
         if (!updated) {
-            for (List<Integer> tileGroup : Blackboard.getBlackboard().getEnemyShipTiles()) {
+            //for (List<Integer> tileGroup : Blackboard.getBlackboard().getEnemyShipTiles())
+            for (List<Integer> tileGroup : ((Blackboard)ob).getEnemyShipTiles()) {
                 enemyShips.add(new Ship(tileGroup));
             }
             updated = true;
