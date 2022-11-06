@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -19,13 +20,17 @@ public class OpponentBoard extends BoardPanel implements ActionListener {
     List<Ship> enemyShips = new ArrayList<>();
     //test code to prove concept
     boolean updated = false;
+    Client client;
 
     /**
      * OpponentBoard constructor - sets up the game panel
      */
-    public OpponentBoard() {
+    public OpponentBoard(Client client) {
+        this.client = client;
         setLayout(new GridLayout(11,11, -1, -1));
         setBorder(BorderFactory.createEmptyBorder(2,2,2,2));
+        SendShotController sendShotController = SendShotController.getInstance();
+        sendShotController.setClient(this.client);
 
         //List<Tile> tileList = new ArrayList<>();
 
@@ -90,7 +95,7 @@ public class OpponentBoard extends BoardPanel implements ActionListener {
         if (e.getSource() instanceof Tile) {
             //prints out which tile was clicked
             Tile temp = (Tile) e.getSource();
-            System.out.println(temp);
+            System.out.println("Sent from oppoenet board" + temp);
             /** switch in the if statement below when the connections are set up */
             // also think if we need to use the ready flag or something similar
 //            if (Blackboard.getBlackboard().isMyTurn() && temp.getShot() == Tile.ShotType.DEFAULT){
@@ -103,6 +108,11 @@ public class OpponentBoard extends BoardPanel implements ActionListener {
                 }
                 else{
                     temp.setShot(Tile.ShotType.HIT);
+                    try {
+                        client.sendMessage("Ship from has been hit");
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
                     if (hit.checkSunk()){
                         shipSunk(hit);
                     }

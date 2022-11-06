@@ -12,16 +12,17 @@ import java.awt.*;
  */
 public class Game extends JFrame {
     private MyBoard myBoard = new MyBoard();
-    private OpponentBoard opponentBoard = new OpponentBoard();
+    private OpponentBoard opponentBoard;
+    private Client client;
     /**
      * Main creates a new battleship window and allows it to be seen and closed properly.
      */
-    public static void main(String[] args) {
-        Game window = new Game();
-        window.setSize(1000, 600);
-        window.setVisible(true);
-        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    }
+//    public static void main(String[] args) {
+//        Game window = new Game(null);
+//        window.setSize(1000, 600);
+//        window.setVisible(true);
+//        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//    }
 
     /**
      * Game constructor
@@ -29,8 +30,9 @@ public class Game extends JFrame {
      * necessary for a GUI with battleship functionality.
      */
 
-    public Game(){
-        super("BattleShip App");
+    public Game(Client client, String player){
+        super(player);
+        this.client = client;
         MyBoardController myBoardController = new MyBoardController();
 
         //menu
@@ -47,7 +49,7 @@ public class Game extends JFrame {
         //center
         setLayout(new GridLayout(1, 2));
         //the two JLabels will be changed to Board Panels
-        JPanel shootScreen = new OpponentBoard();
+        JPanel shootScreen = new OpponentBoard(this.client);
         JPanel shipScreen = new JPanel();
         shipScreen.setLayout(new GridLayout(11, 11, -1, -1));
         shipScreen.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2));
