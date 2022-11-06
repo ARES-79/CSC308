@@ -3,6 +3,12 @@ package Asgn03;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Assignment 03
+ * @author Andrew Estrada
+ * @version 1.0
+ * Ship - class in charge of containing data of groups of SHIP tiles
+ * */
 public class Ship {
 
     List<Integer> startingTiles;
