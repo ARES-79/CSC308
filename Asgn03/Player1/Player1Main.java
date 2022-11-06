@@ -17,7 +17,7 @@ public class Player1Main {
     public synchronized void serverSetup() throws InterruptedException {
         this.server = new Server(6666);
         this.client = new Client("localhost", 4444);
-        this.serverThread = new Thread(thisserver);
+        this.serverThread = new Thread(this.server);
         this.clientThread = new Thread(this.client);
         this.serverThread.start();
         this.clientThread.start();
