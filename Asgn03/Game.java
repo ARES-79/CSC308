@@ -2,10 +2,6 @@ package Asgn03;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.List;
-import java.util.ArrayList;
 
 /**
  * Assignment 03
@@ -15,14 +11,13 @@ import java.util.ArrayList;
  * Game Class - battleship app with GUI and functionality
  */
 public class Game extends JFrame {
-    MyBoard myBoard;
-    YourBoard yourBoard;
-
+    private MyBoard myBoard = new MyBoard();
+    private OpponentBoard opponentBoard = new OpponentBoard();
     /**
      * Main creates a new battleship window and allows it to be seen and closed properly.
      */
     public static void main(String[] args) {
-        Game window = new Game(ClientServerEnum.SERVER);
+        Game window = new Game();
         window.setSize(1000, 600);
         window.setVisible(true);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -33,10 +28,10 @@ public class Game extends JFrame {
      * Uses inheritance from JFrame to create a window with the elements
      * necessary for a GUI with battleship functionality.
      */
-    public Game(ClientServerEnum type) {
-        super(String.valueOf(type));
-        Controller controller = new Controller();
-        this.myBoard = new MyBoard(type);
+
+    public Game(){
+        super("BattleShip App");
+        MyBoardController myBoardController = new MyBoardController();
 
         //menu
         JMenuBar menuBar = new JMenuBar();
@@ -52,7 +47,7 @@ public class Game extends JFrame {
         //center
         setLayout(new GridLayout(1, 2));
         //the two JLabels will be changed to Board Panels
-        JLabel shootScreen = new JLabel("This will be the shooting screen.");
+        JPanel shootScreen = new OpponentBoard();
         JPanel shipScreen = new JPanel();
         shipScreen.setLayout(new GridLayout(11, 11, -1, -1));
         shipScreen.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2));
@@ -67,10 +62,13 @@ public class Game extends JFrame {
             else if (i % 11 == 0) {
                 int alpha = (i % 10 == 0) ? 10 : i % 10;
                 shipScreen.add(new JLabel("   " + Character.toString((char) (alpha + 64))));
-            } else {
-                myBoard.addTile(new Tile(value));
-                value += 1;
-                shipScreen.add(myBoard.getMyTiles().get(myBoard.getMyTiles().size() - 1));
+
+            }
+            else{
+                Blackboard.getBlackboard().addTile(new Tile(value));
+                value +=1;
+                shipScreen.add(Blackboard.getBlackboard().getTileList().get(Blackboard.getBlackboard().getTileList().size() -1));
+                Blackboard.getBlackboard().getTileList().get(Blackboard.getBlackboard().getTileList().size() -1).addActionListener(MyBoardController.getInstance());
             }
         }
 
@@ -78,10 +76,10 @@ public class Game extends JFrame {
         add(shootScreen);
         add(shipScreen);
 
-        myBoard.getMyTiles().get(55).setTileType(Tile.TileType.SHIP);
-        myBoard.getMyTiles().get(55).updateView();
-        myBoard.getMyTiles().get(5).setShot(Tile.ShotType.MISS);
-        myBoard.getMyTiles().get(5).updateView();
+//        Blackboard.getBlackboard().getTileList().get(55).setTileType(Tile.TileType.SHIP);
+//        Blackboard.getBlackboard().getTileList().get(55).updateView();
+//        myBoard.getMyTiles().get(5).setShot(Tile.ShotType.MISS);
+//        myBoard.getMyTiles().get(5).updateView();
 
     }
 

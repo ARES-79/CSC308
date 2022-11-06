@@ -47,12 +47,20 @@ public class Tile extends JButton {
      */
     public Tile(int index){
         super();
+        super.setContentAreaFilled(false);
         this.index = index;
         tileType = TileType.DEFAULT;
         shot = ShotType.DEFAULT;
         setBorder(BorderFactory.createLineBorder(Color.BLACK));
         setOpaque(true);
-        addActionListener(Controller.getInstance());
+//        addActionListener(MyBoardController.getInstance());
+    }
+
+    @Override
+    public String toString(){
+        return "index: " + index +
+                " type: " + tileType +
+                " shot: " + shot;
     }
 
     //various getters
@@ -102,6 +110,7 @@ public class Tile extends JButton {
                 setBackground(Color.CYAN);
                 break;
             case SHIP:
+                System.out.println("changing color");
                 setBackground(Color.GRAY);
                 break;
             case SUNK:

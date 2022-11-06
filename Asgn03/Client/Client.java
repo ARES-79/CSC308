@@ -36,7 +36,7 @@ public class Client{
     public static void main(String[] args) throws IOException {
         Client client=new Client();
         client.startConnection("127.0.0.1", 6666);
-        Game window = new Game(ClientServerEnum.CLIENT);
+        Game window = new Game();
         window.setSize(1000, 600);
         window.setVisible(true);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

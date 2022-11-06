@@ -37,7 +37,7 @@ public class Server {
 }
 
     public static void main(String[] args) throws IOException {
-        Game window = new Game(ClientServerEnum.SERVER);
+        Game window = new Game();
         window.setSize(1000, 600);
         window.setVisible(true);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

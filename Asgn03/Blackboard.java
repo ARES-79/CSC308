@@ -13,7 +13,11 @@ import java.util.List;
  *          Singleton pattern
  */
 public class Blackboard extends MyObservable {
-    private List<Tile> tileList = new ArrayList<>();
+    private List<Tile> myTileList = new ArrayList<>();
+    private List<List<Integer>> enemyShipTiles = new ArrayList<>();
+    //opponentShips
+    int shotIndex;
+    boolean myTurn;
     private static Blackboard blackboard;
 
     /**
@@ -35,13 +39,36 @@ public class Blackboard extends MyObservable {
      * 
      */
     public List<Tile> getTileList(){
-        return tileList;
+        return myTileList;
+    }
+
+    public void addTile(Tile t) {myTileList.add(t);}
+
+    public List<List<Integer>> getEnemyShipTiles() {
+        return enemyShipTiles;
+    }
+
+    public int getShotIndex() {
+        return shotIndex;
+    }
+
+    public boolean isMyTurn() {
+        return myTurn;
+    }
+
+    public void setShotIndex(int shotIndex) {
+        this.shotIndex = shotIndex;
+    }
+
+    public void setMyTurn(boolean myTurn) {
+        this.myTurn = myTurn;
     }
 
     /**
      * updateData - calls notifying which then updates all the observers
-     */
+    */
     public void updateData(){
         notifying();
     }
+
 }
