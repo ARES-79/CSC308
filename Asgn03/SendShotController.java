@@ -8,8 +8,12 @@ import java.awt.event.ActionListener;
 public class SendShotController implements ActionListener {
 
     private static SendShotController sendShotController;
+    private Client client;
 
-    protected SendShotController() {
+    protected SendShotController() {}
+
+    public void setClient(Client client){
+        this.client = client;
     }
 
     /**
@@ -34,7 +38,7 @@ public class SendShotController implements ActionListener {
         if (e.getSource() instanceof Tile) {
             //prints out which tile was clicked
             Tile temp = (Tile) e.getSource();
-            System.out.println(temp);
+            System.out.println("From sendshotcontroller" + temp);
             if (temp.getShot() != Tile.ShotType.DEFAULT){
 
             }

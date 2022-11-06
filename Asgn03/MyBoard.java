@@ -9,6 +9,7 @@ import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class MyBoard extends BoardPanel {
 //    boolean ready = false;
 //    int numShipTiles = 10;
@@ -20,6 +21,7 @@ public class MyBoard extends BoardPanel {
     //allows you to place the ships
     //does not have the list of tiles
     //show tiles in the blackboard
+
 
     //need to show where opponent has shot!!!!!!!!!!!!!
 
