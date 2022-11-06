@@ -1,5 +1,9 @@
-package Asgn03;
+package Asgn03.Client;
 
+import Asgn03.ClientServerEnum;
+import Asgn03.Game;
+
+import javax.swing.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -30,12 +34,12 @@ public class Client{
     }
 
     public static void main(String[] args) throws IOException {
-//        Game window = new Game(ClientServerEnum.SERVER);
-//        window.setSize(1000, 600);
-//        window.setVisible(true);
-//        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Client client=new Client();
         client.startConnection("127.0.0.1", 6666);
-        client.sendMessage("Exit");
+        Game window = new Game(ClientServerEnum.CLIENT);
+        window.setSize(1000, 600);
+        window.setVisible(true);
+        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        System.out.println("Done with client");
     }
 }

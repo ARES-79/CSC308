@@ -1,4 +1,7 @@
-package Asgn03;
+package Asgn03.Server;
+
+import Asgn03.ClientServerEnum;
+import Asgn03.Game;
 
 import javax.swing.*;
 import java.io.*;
@@ -8,8 +11,7 @@ import java.net.Socket;
 public class Server {
     private ServerSocket serverSocket;
 
-
-    public void start(int port) throws IOException {
+    public void start(int port){
         try {
             serverSocket = new ServerSocket(port);
             serverSocket.setReuseAddress(true);
@@ -35,11 +37,12 @@ public class Server {
 }
 
     public static void main(String[] args) throws IOException {
+        Game window = new Game(ClientServerEnum.SERVER);
+        window.setSize(1000, 600);
+        window.setVisible(true);
+        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Server server = new Server();
         server.start(6666);
-//        Game window = new Game(ClientServerEnum.SERVER);
-//        window.setSize(1000, 600);
-//        window.setVisible(true);
-//        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        System.out.println("Hello");
     }
 }

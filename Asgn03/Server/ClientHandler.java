@@ -1,4 +1,4 @@
-package Asgn03;
+package Asgn03.Server;
 
 import java.io.*;
 import java.net.Socket;

@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 /**
  * Assignment 03
+ *
  * @author Andrew Estrada
  * @version 1.0
  * Game Class - battleship app with GUI and functionality
@@ -20,11 +21,11 @@ public class Game extends JFrame {
     /**
      * Main creates a new battleship window and allows it to be seen and closed properly.
      */
-    public static void main(String[]args){
-//        Game window = new Game();
-//        window.setSize(1000, 600);
-//        window.setVisible(true);
-//        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    public static void main(String[] args) {
+        Game window = new Game(ClientServerEnum.SERVER);
+        window.setSize(1000, 600);
+        window.setVisible(true);
+        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
     /**
@@ -32,7 +33,7 @@ public class Game extends JFrame {
      * Uses inheritance from JFrame to create a window with the elements
      * necessary for a GUI with battleship functionality.
      */
-    public Game(ClientServerEnum type){
+    public Game(ClientServerEnum type) {
         super(String.valueOf(type));
         Controller controller = new Controller();
         this.myBoard = new MyBoard(type);
@@ -49,28 +50,27 @@ public class Game extends JFrame {
         edit.add(reset);
 
         //center
-        setLayout(new GridLayout(1,2));
+        setLayout(new GridLayout(1, 2));
         //the two JLabels will be changed to Board Panels
         JLabel shootScreen = new JLabel("This will be the shooting screen.");
         JPanel shipScreen = new JPanel();
-        shipScreen.setLayout(new GridLayout(11,11, -1, -1));
-        shipScreen.setBorder(BorderFactory.createEmptyBorder(2,2,2,2));
+        shipScreen.setLayout(new GridLayout(11, 11, -1, -1));
+        shipScreen.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2));
 
         //List<Tile> tileList = new ArrayList<>();
 
         shipScreen.add(new JLabel(""));
         int value = 0;
-        for(int i = 1; i<121; i++) {
+        for (int i = 1; i < 121; i++) {
             if (i < 11)
                 shipScreen.add(new JLabel("     " + String.valueOf(i)));
-            else if (i % 11 == 0){
-                int alpha = (i%10 == 0) ? 10 : i%10;
+            else if (i % 11 == 0) {
+                int alpha = (i % 10 == 0) ? 10 : i % 10;
                 shipScreen.add(new JLabel("   " + Character.toString((char) (alpha + 64))));
-            }
-            else{
+            } else {
                 myBoard.addTile(new Tile(value));
-                value +=1;
-                shipScreen.add(myBoard.getMyTiles().get(myBoard.getMyTiles().size() -1));
+                value += 1;
+                shipScreen.add(myBoard.getMyTiles().get(myBoard.getMyTiles().size() - 1));
             }
         }
 
