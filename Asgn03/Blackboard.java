@@ -14,6 +14,7 @@ import java.util.List;
  */
 public class Blackboard extends MyObservable {
     private List<Tile> myTileList = new ArrayList<>();
+    private List<List<Integer>> enemyShipTiles = new ArrayList<>();
     //opponentShips
     int shotIndex;
     boolean myTurn;
@@ -43,6 +44,25 @@ public class Blackboard extends MyObservable {
 
     public void addTile(Tile t) {myTileList.add(t);}
 
+    public List<List<Integer>> getEnemyShipTiles() {
+        return enemyShipTiles;
+    }
+
+    public int getShotIndex() {
+        return shotIndex;
+    }
+
+    public boolean isMyTurn() {
+        return myTurn;
+    }
+
+    public void setShotIndex(int shotIndex) {
+        this.shotIndex = shotIndex;
+    }
+
+    public void setMyTurn(boolean myTurn) {
+        this.myTurn = myTurn;
+    }
 
     /**
      * updateData - calls notifying which then updates all the observers

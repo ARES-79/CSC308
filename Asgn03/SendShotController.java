@@ -3,6 +3,8 @@ package Asgn03;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+
+/** CURRENTLY NOT IN USE*/
 public class SendShotController implements ActionListener {
 
     private static SendShotController sendShotController;
@@ -33,6 +35,9 @@ public class SendShotController implements ActionListener {
             //prints out which tile was clicked
             Tile temp = (Tile) e.getSource();
             System.out.println(temp);
+            if (temp.getShot() != Tile.ShotType.DEFAULT){
+
+            }
         }
     }
 }
