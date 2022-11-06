@@ -10,7 +10,7 @@ public class Server implements Runnable {
     private ObjectOutputStream out;
     private ObjectInputStream in;
     private int port;
-
+    private Blackboard blackboard = Blackboard.getBlackboard();
     public Server(int port) {
         this.port = port;
     }
@@ -25,6 +25,9 @@ public class Server implements Runnable {
             ServerDTO inputObject = null;
             while ((inputObject = (ServerDTO) in.readObject()) != null) {
                 System.out.println(inputObject.getMessage());
+                Tile temp = blackboard.getTileList().get(3);
+                temp.setShot(Tile.ShotType.HIT);
+                temp.updateView();
             }
         } catch (Exception e) {
             e.printStackTrace();

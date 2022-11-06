@@ -42,6 +42,7 @@ public class Client implements Runnable {
 
     public void sendObject(ServerDTO data) throws IOException {
         out.writeObject(data);
+        out.flush();
         System.out.println("message sent");
     }
 
