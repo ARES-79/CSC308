@@ -1,5 +1,6 @@
 package Asgn03;
 
+import java.io.IOException;
 import java.util.LinkedList;
 
 /**
@@ -32,7 +33,7 @@ public abstract class MyObservable {
     /**
      * notifying - updates all the observers
      */
-    public void notifying(){
+    public void notifying() throws IOException {
         for (MyObserver ob : observers){
             ob.update(this);
         }
