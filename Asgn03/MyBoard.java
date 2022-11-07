@@ -18,6 +18,7 @@ import java.util.List;
 public class MyBoard extends BoardPanel implements ActionListener {
     int numShipTiles = 10;
     List<List<Integer>> shipList = new ArrayList<>();
+    ArrayList<Tile> shipTiles = new ArrayList<>();
 
     public MyBoard() {
 //        setLayout(new GridLayout(11,11, -1, -1));
@@ -107,7 +108,6 @@ public class MyBoard extends BoardPanel implements ActionListener {
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        ArrayList<Tile> shipTiles = new ArrayList<>();
         if (e.getSource() instanceof Tile temp && numShipTiles > 0){
             //prints out which tile was clicked
             System.out.println(temp);
@@ -125,7 +125,12 @@ public class MyBoard extends BoardPanel implements ActionListener {
             }
         }
         else if (numShipTiles == 0){
-            List<List<Integer>> ships = makeShipList(shipTiles);
+            List<List<Integer>> ships = null;
+            try {
+                ships = makeShipList(shipTiles);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
             try {
                 Blackboard.getBlackboard().updateData();
             } catch (IOException ex) {
@@ -192,7 +197,7 @@ public class MyBoard extends BoardPanel implements ActionListener {
             }
 
         }
-        System.out.println("Built shipList");
+        System.out.println("here");
         System.out.println(shipList);
         Blackboard.getBlackboard().setMyShipTiles(shipList);
         Blackboard.getBlackboard().updateData();
