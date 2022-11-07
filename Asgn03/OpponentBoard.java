@@ -20,17 +20,13 @@ public class OpponentBoard extends BoardPanel implements ActionListener {
     List<Ship> enemyShips = new ArrayList<>();
     //test code to prove concept
     boolean updated = false;
-    Client client;
 
     /**
      * OpponentBoard constructor - sets up the game panel
      */
     public OpponentBoard() {
-        this.client = client;
         setLayout(new GridLayout(11,11, -1, -1));
         setBorder(BorderFactory.createEmptyBorder(2,2,2,2));
-        SendShotController sendShotController = SendShotController.getInstance();
-        sendShotController.setClient(this.client);
 
         //List<Tile> tileList = new ArrayList<>();
 
@@ -105,12 +101,18 @@ public class OpponentBoard extends BoardPanel implements ActionListener {
                 Ship hit = checkAllShips(temp.getIndex());
                 if (hit == null){
                     temp.setShot(Tile.ShotType.MISS);
+                    try {
+                        ServerDTO data = new ServerDTO(Tile.ShotType.MISS.toString(), temp.getIndex());
+                        Blackboard.getBlackboard().getClient().sendObject(data);
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
                 }
                 else{
                     temp.setShot(Tile.ShotType.HIT);
                     try {
-                        ServerDTO data = new ServerDTO("Tile was hit", temp.getIndex());
-                        client.sendObject(data);
+                        ServerDTO data = new ServerDTO(Tile.ShotType.HIT.toString(), temp.getIndex());
+                        Blackboard.getBlackboard().getClient().sendObject(data);
                     } catch (IOException ex) {
                         ex.printStackTrace();
                     }

@@ -76,5 +76,8 @@ public class Blackboard extends MyObservable {
     public void setClient(Client client){
         this.client = client;
     }
+    public Client getClient(){
+        return this.client;
+    }
 
 }
