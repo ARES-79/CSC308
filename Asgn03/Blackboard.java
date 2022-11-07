@@ -50,6 +50,10 @@ public class Blackboard extends MyObservable {
         return enemyShipTiles;
     }
 
+    public void setEnemyShipTiles(List<List<Integer>> enemyShipTiles) {
+        this.enemyShipTiles = enemyShipTiles;
+    }
+
     public int getShotIndex() {
         return shotIndex;
     }
