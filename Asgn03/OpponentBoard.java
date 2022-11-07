@@ -89,7 +89,6 @@ public class OpponentBoard extends BoardPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() instanceof Tile && Blackboard.getBlackboard().isMyTurn()) {
-            Blackboard.getBlackboard().setMyTurn(false);
             //prints out which tile was clicked
             Tile temp = (Tile) e.getSource();
             /** switch in the if statement below when the connections are set up */
@@ -121,6 +120,7 @@ public class OpponentBoard extends BoardPanel implements ActionListener {
                     }
                 }
                 temp.updateView();
+                Blackboard.getBlackboard().setMyTurn(false);
             }
         }
     }
