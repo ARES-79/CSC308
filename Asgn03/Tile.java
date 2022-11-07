@@ -110,7 +110,6 @@ public class Tile extends JButton {
                 setBackground(Color.CYAN);
                 break;
             case SHIP:
-                System.out.println("changing color");
                 setBackground(Color.GRAY);
                 break;
             case SUNK:

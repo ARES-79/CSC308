@@ -24,6 +24,7 @@ public class Server implements Runnable {
 
             ServerDTO inputObject = null;
             while ((inputObject = (ServerDTO) in.readObject()) != null) {
+                Blackboard.getBlackboard().setMyTurn(true);
                 if(inputObject.getMessage().equals(Tile.ShotType.HIT.toString())){
                     Tile temp = blackboard.getTileList().get(inputObject.getTileIndex());
                     temp.setShot(Tile.ShotType.HIT);
@@ -33,6 +34,9 @@ public class Server implements Runnable {
                     Tile temp = blackboard.getTileList().get(inputObject.getTileIndex());
                     temp.setShot(Tile.ShotType.MISS);
                     temp.updateView();
+                }
+                else if(inputObject.getMessage().equals("Ships")){
+                    Blackboard.getBlackboard().setEnemyShipTiles(inputObject.getShips());
                 }
 
             }

@@ -3,7 +3,7 @@ package Asgn03;
 import java.io.*;
 import java.net.Socket;
 
-public class Client implements Runnable {
+public class Client implements Runnable, MyObserver {
     private Socket clientSocket;
     private ObjectOutputStream out;
     private ObjectInputStream in;
@@ -50,6 +50,12 @@ public class Client implements Runnable {
         in.close();
         out.close();
         clientSocket.close();
+    }
+
+    @Override
+    public void update(MyObservable ob) throws IOException {
+         ServerDTO serverDTO = new ServerDTO("Ships", 0, Blackboard.getBlackboard().getMyShipTiles());
+         this.sendObject(serverDTO);
     }
 
 //    public static void main(String[] args) throws IOException {

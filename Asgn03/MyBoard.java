@@ -93,8 +93,10 @@ public class MyBoard extends BoardPanel implements ActionListener {
 
     @Override
     public void update(MyObservable ob) {
-        Integer idx = Blackboard.getBlackboard().getShotIndex();
-        placeOppShot(idx);
+        if(Blackboard.getBlackboard().getShotIndex() != -1) {
+            Integer idx = Blackboard.getBlackboard().getShotIndex();
+            placeOppShot(idx);
+        }
     }
 
 
@@ -186,7 +188,8 @@ public class MyBoard extends BoardPanel implements ActionListener {
 
         }
         System.out.println(shipList);
-        Blackboard.getBlackboard().setEnemyShipTiles(shipList);
+        Blackboard.getBlackboard().setMyShipTiles(shipList);
+        Blackboard.getBlackboard().updateData();
         return shipList;
     }
 

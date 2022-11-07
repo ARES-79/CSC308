@@ -15,10 +15,11 @@ import java.util.List;
 public class Blackboard extends MyObservable {
     private List<Tile> myTileList = new ArrayList<>();
     private List<List<Integer>> enemyShipTiles = new ArrayList<>();
+    private List<List<Integer>> myShipTiles = new ArrayList<>();
     private Client client;
 
     //opponentShips
-    int shotIndex;
+    private int shotIndex = -1;
     boolean myTurn;
     private static Blackboard blackboard;
 
@@ -48,6 +49,10 @@ public class Blackboard extends MyObservable {
 
     public List<List<Integer>> getEnemyShipTiles() {
         return enemyShipTiles;
+    }
+
+    public void setMyShipTiles(List<List<Integer>> myShipTiles) {
+        this.myShipTiles = myShipTiles;
     }
 
     public int getShotIndex() {
@@ -80,4 +85,11 @@ public class Blackboard extends MyObservable {
         return this.client;
     }
 
+    public void setEnemyShipTiles(List<List<Integer>> enemyShipTiles) {
+        this.enemyShipTiles = enemyShipTiles;
+    }
+
+    public List<List<Integer>> getMyShipTiles() {
+        return myShipTiles;
+    }
 }
