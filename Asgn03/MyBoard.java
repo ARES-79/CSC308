@@ -157,10 +157,10 @@ public class MyBoard extends BoardPanel implements ActionListener, MyObserver {
         while(shipTiles.size() > 0){
             Tile t = shipTiles.get(0);
 
-            Tile up = (t.getIndex() - 10 >=0) ? Blackboard.getBlackboard().getTileList().get(t.getIndex() - 10): new Tile(-1);
-            Tile down = (t.getIndex() + 10 >=0) ? Blackboard.getBlackboard().getTileList().get(t.getIndex() + 10): new Tile(-1);
-            Tile left = (t.getIndex() - 1 >=0) ? Blackboard.getBlackboard().getTileList().get(t.getIndex() - 1): new Tile(-1);
-            Tile right = (t.getIndex() + 1 >=0) ? Blackboard.getBlackboard().getTileList().get(t.getIndex() + 1): new Tile(-1);
+            Tile up = (t.getIndex() - 10 >=0) && (t.getIndex() - 10 <= 99) ? Blackboard.getBlackboard().getTileList().get(t.getIndex() - 10): new Tile(-1);
+            Tile down = (t.getIndex() + 10 >=0) && (t.getIndex() + 10 <= 99) ? Blackboard.getBlackboard().getTileList().get(t.getIndex() + 10): new Tile(-1);
+            Tile left = (t.getIndex() - 1 >=0) && (t.getIndex() - 1 <= 99) ? Blackboard.getBlackboard().getTileList().get(t.getIndex() - 1): new Tile(-1);
+            Tile right = (t.getIndex() + 1 >=0) && (t.getIndex() + 1 <= 99) ? Blackboard.getBlackboard().getTileList().get(t.getIndex() + 1): new Tile(-1);
             //need to check if in different rows
 
             for(List<Integer> ship: shipList){
