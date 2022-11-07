@@ -1,5 +1,6 @@
 package Asgn03.Player1;
 
+import Asgn03.Blackboard;
 import Asgn03.Client;
 import Asgn03.Game;
 import Asgn03.Server;
@@ -7,10 +8,10 @@ import Asgn03.Server;
 import javax.swing.*;
 
 public class Player1Main {
-    Client client;
-    Server server;
-    Thread serverThread;
-    Thread clientThread;
+    private Client client;
+    private Server server;
+    private Thread serverThread;
+    private Thread clientThread;
     public Player1Main(){}
 
 
@@ -27,9 +28,35 @@ public class Player1Main {
     public static void main(String[] args) throws InterruptedException {
         Player1Main player1 = new Player1Main();
         player1.serverSetup();
-        Game window = new Game(player1.client, player1.server, "Player1");
+        Game window = new Game("Player1");
+        Blackboard blackboard = Blackboard.getBlackboard();
+        blackboard.setClient(player1.getClient());
         window.setSize(1000, 600);
         window.setVisible(true);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
+    }
+
+    public Server getServer() {
+        return server;
+    }
+
+    public void setServer(Server server) {
+        this.server = server;
+    }
+
+    public Thread getServerThread() {
+        return serverThread;
+    }
+
+    public void setServerThread(Thread serverThread) {
+        this.serverThread = serverThread;
     }
 }

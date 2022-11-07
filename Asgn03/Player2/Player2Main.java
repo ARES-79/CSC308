@@ -1,5 +1,6 @@
 package Asgn03.Player2;
 
+import Asgn03.Blackboard;
 import Asgn03.Client;
 import Asgn03.Game;
 import Asgn03.Server;
@@ -28,7 +29,9 @@ public class Player2Main {
     public static void main(String[] args) throws IOException, InterruptedException {
         Player2Main player2 = new Player2Main();
         player2.serverSetup();
-        Game window = new Game(player2.client, player2.server,"Player2");
+        Game window = new Game("Player2");
+        Blackboard blackboard = Blackboard.getBlackboard();
+        blackboard.setClient(player2.client);
         window.setSize(1000, 600);
         window.setVisible(true);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

@@ -17,7 +17,7 @@ import java.util.List;
 public class Game extends JFrame implements ActionListener {
     private JPanel myBoard;
     private OpponentBoard opponentBoard;
-    private Client client;
+
     /**
      * Main creates a new battleship window and allows it to be seen and closed properly.
      */
@@ -34,10 +34,10 @@ public class Game extends JFrame implements ActionListener {
      * necessary for a GUI with battleship functionality.
      */
 
-    public Game(Client client, Server server, String player){
+    public Game(String player){
         super(player);
-        this.client = client;
         MyBoardController myBoardController = new MyBoardController();
+
 
         //menu
         JMenuBar menuBar = new JMenuBar();
@@ -51,7 +51,7 @@ public class Game extends JFrame implements ActionListener {
         //center
         setLayout(new GridLayout(1, 2));
         //the two JLabels will be changed to Board Panels
-        opponentBoard = new OpponentBoard(this.client);
+        opponentBoard = new OpponentBoard();
         myBoard = setUpMyBoard();
 
         add(opponentBoard);
