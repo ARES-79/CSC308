@@ -36,7 +36,10 @@ public class Server implements Runnable {
                     temp.updateView();
                 }
                 else if(inputObject.getMessage().equals("Ships")){
+                    System.out.println(this + "recieved");
                     Blackboard.getBlackboard().setEnemyShipTiles(inputObject.getShips());
+                    Blackboard.getBlackboard().setReceivedShips(true);
+                    Blackboard.getBlackboard().updateData();
                 }
 
             }

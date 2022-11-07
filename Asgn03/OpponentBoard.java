@@ -14,7 +14,7 @@ import java.util.ArrayList;
  * @version 1.0
  * OpponentBoard - class in charge of functionality of attempting to shoot the opponent
  */
-public class OpponentBoard extends BoardPanel implements ActionListener {
+public class OpponentBoard extends BoardPanel implements ActionListener, MyObserver {
 
     List<Tile> enemyWaters = new ArrayList<>();
     List<Ship> enemyShips = new ArrayList<>();
@@ -27,6 +27,7 @@ public class OpponentBoard extends BoardPanel implements ActionListener {
     public OpponentBoard() {
         setLayout(new GridLayout(11,11, -1, -1));
         setBorder(BorderFactory.createEmptyBorder(2,2,2,2));
+        Blackboard.getBlackboard().addObserver(this);
 
         //List<Tile> tileList = new ArrayList<>();
 
@@ -50,9 +51,9 @@ public class OpponentBoard extends BoardPanel implements ActionListener {
 
         /** Test code to show that it works*/
 //        Blackboard.getBlackboard().setMyTurn(true);
-        enemyShips.add(new Ship( new ArrayList<>(List.of(1,2,3,4,5))));
-        enemyShips.add(new Ship( new ArrayList<>(List.of(20,30,40))));
-        enemyShips.add(new Ship( new ArrayList<>(List.of(99, 89, 79 ))));
+        //enemyShips.add(new Ship( new ArrayList<>(List.of(1,2,3,4,5))));
+        //enemyShips.add(new Ship( new ArrayList<>(List.of(20,30,40))));
+        //enemyShips.add(new Ship( new ArrayList<>(List.of(99, 89, 79 ))));
 
     }
 
@@ -88,7 +89,7 @@ public class OpponentBoard extends BoardPanel implements ActionListener {
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() instanceof Tile && Blackboard.getBlackboard().isMyTurn()) {
+        if (e.getSource() instanceof Tile && Blackboard.getBlackboard().isMyTurn() && Blackboard.getBlackboard().isReceivedShips()) {
             //prints out which tile was clicked
             Tile temp = (Tile) e.getSource();
             /** switch in the if statement below when the connections are set up */
@@ -131,12 +132,13 @@ public class OpponentBoard extends BoardPanel implements ActionListener {
      */
     @Override
     public void update(MyObservable ob) {
-        if (!updated) {
+        if (!updated && Blackboard.getBlackboard().isReceivedShips()) {
             //for (List<Integer> tileGroup : Blackboard.getBlackboard().getEnemyShipTiles())
             for (List<Integer> tileGroup : ((Blackboard)ob).getEnemyShipTiles()) {
                 enemyShips.add(new Ship(tileGroup));
             }
             updated = true;
+            System.out.println(Blackboard.getBlackboard().getEnemyShipTiles());
         }
     }
 

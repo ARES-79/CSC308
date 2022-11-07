@@ -13,6 +13,7 @@ public class Client implements Runnable, MyObserver {
     public Client(String ip, int port) {
         this.ip = ip;
         this.port = port;
+        Blackboard.getBlackboard().addObserver(this);
     }
 
     public void run() {
@@ -54,8 +55,13 @@ public class Client implements Runnable, MyObserver {
 
     @Override
     public void update(MyObservable ob) throws IOException {
-         ServerDTO serverDTO = new ServerDTO("Ships", 0, Blackboard.getBlackboard().getMyShipTiles());
-         this.sendObject(serverDTO);
+        System.out.println("In: "+ this);
+        if(!Blackboard.getBlackboard().isSentShips() && Blackboard.getBlackboard().isReadyToSendShips()) {
+            System.out.println(this + "is sending");
+            ServerDTO serverDTO = new ServerDTO("Ships", 0, Blackboard.getBlackboard().getMyShipTiles());
+            this.sendObject(serverDTO);
+            Blackboard.getBlackboard().setSentShips(true);
+        }
     }
 
 //    public static void main(String[] args) throws IOException {
