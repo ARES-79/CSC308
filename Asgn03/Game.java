@@ -38,7 +38,7 @@ public class Game extends JFrame implements ActionListener {
     public Game(String player){
         super(player);
 
-        Blackboard.getBlackboard().setMyTurn(player.equals("Player 1"));
+        Blackboard.getBlackboard().setMyTurn(player.equals("Player1"));
 
 
         //menu
