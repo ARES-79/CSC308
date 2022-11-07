@@ -36,7 +36,6 @@ public abstract class MyObservable {
     public void notifying() throws IOException {
         for (MyObserver ob : observers){
             ob.update(this);
-            System.out.println(ob);
         }
     }
 }

@@ -14,7 +14,7 @@ import java.util.List;
 
 
 public class MyBoard extends BoardPanel implements ActionListener, MyObserver {
-    int numShipTiles = 3;
+    int numShipTiles = 10;
     List<List<Integer>> shipList = new ArrayList<>();
     ArrayList<Tile> shipTiles = new ArrayList<>();
 
@@ -100,6 +100,16 @@ public class MyBoard extends BoardPanel implements ActionListener, MyObserver {
         }
     }
 
+    private boolean checkIfTileInShipList(List<List<Integer>> shipList, int checkTile){
+        for(List<Integer> ship: shipList){
+            for(int tile: ship){
+                if(checkTile == tile){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 
     /**
      * setting the ships for player 1
@@ -141,7 +151,6 @@ public class MyBoard extends BoardPanel implements ActionListener, MyObserver {
     }
 
 
-
     // takes all the ship tiles and turns them into a 2D list of integers representing ships
     public List<List<Integer>> makeShipList(List<Tile> shipTiles) throws IOException {
         List<List<Integer>> shipList = new ArrayList<>();
@@ -169,15 +178,17 @@ public class MyBoard extends BoardPanel implements ActionListener, MyObserver {
             Tile right = (t.getIndex() + 1 >=0) && (t.getIndex() + 1 <= 99) ? Blackboard.getBlackboard().getTileList().get(t.getIndex() + 1): new Tile(-1);
             //need to check if in different rows
 
-            for(List<Integer> ship: shipList){
-                for(int tile: ship){
-                    if(up.getIndex() == tile){
-                        up.tileType = Tile.TileType.DEFAULT;
-                    }
-                    if(left.getIndex() == tile){
-                        left.tileType = Tile.TileType.DEFAULT;
-                    }
-                }
+            if(checkIfTileInShipList(shipList, up.getIndex())){
+                up.tileType = Tile.TileType.DEFAULT;
+            }
+            if(checkIfTileInShipList(shipList, left.getIndex())){
+                left.tileType = Tile.TileType.DEFAULT;
+            }
+            if(checkIfTileInShipList(shipList, right.getIndex())){
+                right.tileType = Tile.TileType.DEFAULT;
+            }
+            if(checkIfTileInShipList(shipList, down.getIndex())){
+                down.tileType = Tile.TileType.DEFAULT;
             }
 
             //if nothing around ship tile, it is a standalone 1 square ship
@@ -194,11 +205,13 @@ public class MyBoard extends BoardPanel implements ActionListener, MyObserver {
                 ship.add(t.getIndex());
                 shipTiles.remove(t);
                 while(down.tileType == Tile.TileType.SHIP){
-                    ship.add(down.getIndex());
-                    shipTiles.remove(down);
-                    if ((down.getIndex() + 10) <= 99){
-                        down = Blackboard.getBlackboard().getTileList().get(down.getIndex() + 10);
-                    } else {break;}
+                    //if(!checkIfTileInShipList(shipList, down.getIndex())){
+                        ship.add(down.getIndex());
+                        shipTiles.remove(down);
+                        if ((down.getIndex() + 10) <= 99){
+                            down = Blackboard.getBlackboard().getTileList().get(down.getIndex() + 10);
+                        } else {break;}
+                    //}
                 }
                 shipList.add(ship);
             }
@@ -208,11 +221,15 @@ public class MyBoard extends BoardPanel implements ActionListener, MyObserver {
                 ship.add(t.getIndex());
                 shipTiles.remove(t);
                 while(right.tileType == Tile.TileType.SHIP && (Math.floorDiv(t.getIndex(), 10) == Math.floorDiv(right.getIndex(), 10))){
-                    ship.add(right.getIndex());
-                    shipTiles.remove(right);
-                    if ((right.getIndex() + 1) <= 99 && (Math.floorDiv(t.getIndex(), 10) == Math.floorDiv(right.getIndex(), 10))){ //CHECK IF DIFFERENT ROWS HERE
-                        right = Blackboard.getBlackboard().getTileList().get(right.getIndex() + 1);
-                    } else {break;}
+                    //if(!checkIfTileInShipList(shipList, right.getIndex())) {
+                        ship.add(right.getIndex());
+                        shipTiles.remove(right);
+                        if ((right.getIndex() + 1) <= 99 && (Math.floorDiv(t.getIndex(), 10) == Math.floorDiv(right.getIndex(), 10))) { //CHECK IF DIFFERENT ROWS HERE
+                            right = Blackboard.getBlackboard().getTileList().get(right.getIndex() + 1);
+                        } else {
+                            break;
+                        }
+                    //}
                 }
                 shipList.add(ship);
             }
