@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -125,7 +126,11 @@ public class MyBoard extends BoardPanel implements ActionListener {
         }
         else if (numShipTiles == 0){
             List<List<Integer>> ships = makeShipList(shipTiles);
-            Blackboard.getBlackboard().updateData();
+            try {
+                Blackboard.getBlackboard().updateData();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
             System.out.println(ships);
         }
     }
@@ -133,7 +138,7 @@ public class MyBoard extends BoardPanel implements ActionListener {
 
 
     // takes all the ship tiles and turns them into a 2D list of integers representing ships
-    public List<List<Integer>> makeShipList(List<Tile> shipTiles){
+    public List<List<Integer>> makeShipList(List<Tile> shipTiles) throws IOException {
         List<List<Integer>> shipList = new ArrayList<>();
 
         shipTiles.sort(new Comparator<Tile>() {

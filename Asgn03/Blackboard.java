@@ -1,5 +1,6 @@
 package Asgn03;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -74,7 +75,7 @@ public class Blackboard extends MyObservable {
     /**
      * updateData - calls notifying which then updates all the observers
     */
-    public void updateData(){
+    public void updateData() throws IOException {
         notifying();
     }
 
