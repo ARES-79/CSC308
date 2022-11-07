@@ -47,6 +47,7 @@ public class Game extends JFrame implements ActionListener {
 
         menuBar.add(edit);
         edit.add(reset);
+        reset.addActionListener(this);
 
         //center
         setLayout(new GridLayout(1, 2));
@@ -94,9 +95,10 @@ public class Game extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-//        if (e.getSource().equals("Reset")){
+        System.out.println(e.getActionCommand());
+//        if (e.getActionCommand().equals("Reset")){
 //            myBoard = setUpMyBoard();
-//            opponentBoard = new OpponentBoard(client);
+//            opponentBoard = new OpponentBoard();
 //            Blackboard.getBlackboard().
 //            private java.util.List<Tile> myTileList = new ArrayList<>();
 //            private List<List<Integer>> enemyShipTiles = new ArrayList<>();
