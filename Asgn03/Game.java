@@ -13,7 +13,7 @@ import java.awt.*;
 public class Game extends JFrame {
     private MyBoard myBoard = new MyBoard();
     private OpponentBoard opponentBoard;
-    private Client client;
+
     /**
      * Main creates a new battleship window and allows it to be seen and closed properly.
      */
@@ -32,8 +32,9 @@ public class Game extends JFrame {
 
     public Game(Client client, Server server, String player){
         super(player);
-        this.client = client;
         MyBoardController myBoardController = new MyBoardController();
+
+        Blackboard.getBlackboard().setClient(client);
 
         //menu
         JMenuBar menuBar = new JMenuBar();
@@ -49,7 +50,7 @@ public class Game extends JFrame {
         //center
         setLayout(new GridLayout(1, 2));
         //the two JLabels will be changed to Board Panels
-        JPanel shootScreen = new OpponentBoard(this.client);
+        JPanel shootScreen = new OpponentBoard();
         JPanel shipScreen = new JPanel();
         shipScreen.setLayout(new GridLayout(11, 11, -1, -1));
         shipScreen.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2));

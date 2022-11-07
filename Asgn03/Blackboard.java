@@ -15,6 +15,8 @@ import java.util.List;
 public class Blackboard extends MyObservable {
     private List<Tile> myTileList = new ArrayList<>();
     private List<List<Integer>> enemyShipTiles = new ArrayList<>();
+    private Client client;
+
     //opponentShips
     int shotIndex;
     boolean myTurn;
@@ -69,6 +71,10 @@ public class Blackboard extends MyObservable {
     */
     public void updateData(){
         notifying();
+    }
+
+    public void setClient(Client client){
+        this.client = client;
     }
 
 }

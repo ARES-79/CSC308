@@ -25,7 +25,7 @@ public class OpponentBoard extends BoardPanel implements ActionListener {
     /**
      * OpponentBoard constructor - sets up the game panel
      */
-    public OpponentBoard(Client client) {
+    public OpponentBoard() {
         this.client = client;
         setLayout(new GridLayout(11,11, -1, -1));
         setBorder(BorderFactory.createEmptyBorder(2,2,2,2));
