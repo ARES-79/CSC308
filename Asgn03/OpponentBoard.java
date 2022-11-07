@@ -102,6 +102,9 @@ public class OpponentBoard extends BoardPanel implements ActionListener, MyObser
                 Ship hit = checkAllShips(temp.getIndex());
                 if (hit == null){
                     temp.setShot(Tile.ShotType.MISS);
+                    temp.updateView();
+                    Blackboard.getBlackboard().setMyTurn(false);
+                    Blackboard.getBlackboard().getStatus().setText("Opponents turn");
                     try {
                         ServerDTO data = new ServerDTO(Tile.ShotType.MISS.toString(), temp.getIndex(), null);
                         Blackboard.getBlackboard().getClient().sendObject(data);
