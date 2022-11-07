@@ -146,6 +146,9 @@ public class MyBoard extends BoardPanel implements ActionListener, MyObserver {
     public List<List<Integer>> makeShipList(List<Tile> shipTiles) throws IOException {
         List<List<Integer>> shipList = new ArrayList<>();
 
+        System.out.println("shipTiles in making ships: ");
+        System.out.println(shipTiles);
+
         Collections.sort(shipTiles, (s1, s2) -> (int) (s1.getIndex() - s2.getIndex()));
 //        shipTiles.sort(new Comparator<Tile>() {
 //            @Override
@@ -153,6 +156,9 @@ public class MyBoard extends BoardPanel implements ActionListener, MyObserver {
 //                return 0;
 //            }
 //        });
+
+        System.out.println("after sorting: ");
+        System.out.println(shipTiles);
 
         while(shipTiles.size() > 0){
             Tile t = shipTiles.get(0);
@@ -201,10 +207,10 @@ public class MyBoard extends BoardPanel implements ActionListener, MyObserver {
                 ArrayList<Integer> ship = new ArrayList<>();
                 ship.add(t.getIndex());
                 shipTiles.remove(t);
-                while(right.tileType == Tile.TileType.SHIP){
+                while(right.tileType == Tile.TileType.SHIP && (Math.floorDiv(t.getIndex(), 10) == Math.floorDiv(right.getIndex(), 10))){
                     ship.add(right.getIndex());
                     shipTiles.remove(right);
-                    if ((right.getIndex() + 1) <= 99 && (t.getIndex() % 10 == right.getIndex() % 10)){ //CHECK IF DIFFERENT ROWS HERE
+                    if ((right.getIndex() + 1) <= 99 && (Math.floorDiv(t.getIndex(), 10) == Math.floorDiv(right.getIndex(), 10))){ //CHECK IF DIFFERENT ROWS HERE
                         right = Blackboard.getBlackboard().getTileList().get(right.getIndex() + 1);
                     } else {break;}
                 }
