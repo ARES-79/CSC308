@@ -24,10 +24,17 @@ public class Server implements Runnable {
 
             ServerDTO inputObject = null;
             while ((inputObject = (ServerDTO) in.readObject()) != null) {
-                System.out.println(inputObject.getMessage() + inputObject.getTileIndex());
-                Tile temp = blackboard.getTileList().get(inputObject.getTileIndex());
-                temp.setShot(Tile.ShotType.HIT);
-                temp.updateView();
+                if(inputObject.getMessage().equals(Tile.ShotType.HIT.toString())){
+                    Tile temp = blackboard.getTileList().get(inputObject.getTileIndex());
+                    temp.setShot(Tile.ShotType.HIT);
+                    temp.updateView();
+                }
+                else if(inputObject.getMessage().equals(Tile.ShotType.MISS.toString())){
+                    Tile temp = blackboard.getTileList().get(inputObject.getTileIndex());
+                    temp.setShot(Tile.ShotType.MISS);
+                    temp.updateView();
+                }
+
             }
         } catch (Exception e) {
             e.printStackTrace();
