@@ -204,7 +204,7 @@ public class MyBoard extends BoardPanel implements ActionListener, MyObserver {
                 while(right.tileType == Tile.TileType.SHIP){
                     ship.add(right.getIndex());
                     shipTiles.remove(right);
-                    if ((right.getIndex() + 1) <= 99){ //CHECK IF DIFFERENT ROWS HERE
+                    if ((right.getIndex() + 1) <= 99 && (t.getIndex() % 10 == right.getIndex() % 10)){ //CHECK IF DIFFERENT ROWS HERE
                         right = Blackboard.getBlackboard().getTileList().get(right.getIndex() + 1);
                     } else {break;}
                 }
