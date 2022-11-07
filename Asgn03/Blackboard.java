@@ -85,4 +85,11 @@ public class Blackboard extends MyObservable {
         return this.client;
     }
 
+    public void setEnemyShipTiles(List<List<Integer>> enemyShipTiles) {
+        this.enemyShipTiles = enemyShipTiles;
+    }
+
+    public List<List<Integer>> getMyShipTiles() {
+        return myShipTiles;
+    }
 }
