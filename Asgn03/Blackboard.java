@@ -21,7 +21,8 @@ public class Blackboard extends MyObservable {
 
     //opponentShips
     private int shotIndex = -1;
-    boolean myTurn;
+    private boolean myTurn;
+    private boolean receivedShips = false;
     private static Blackboard blackboard;
 
     /**
@@ -58,6 +59,14 @@ public class Blackboard extends MyObservable {
 
     public int getShotIndex() {
         return shotIndex;
+    }
+
+    public boolean isReceivedShips() {
+        return receivedShips;
+    }
+
+    public void setReceivedShips(boolean receivedShips) {
+        this.receivedShips = receivedShips;
     }
 
     public boolean isMyTurn() {
