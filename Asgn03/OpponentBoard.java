@@ -172,6 +172,10 @@ public class OpponentBoard extends BoardPanel implements ActionListener, MyObser
         return true;
     }
 
+    /**
+     * checkWinV2
+     * @return boolean - true if you have hit all enemy ship tiles, false otherwise
+     */
     public boolean checkWinV2(){
         for (Ship s: enemyShips){
             if (!s.checkSunk())
