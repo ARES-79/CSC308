@@ -115,7 +115,7 @@ public class OpponentBoard extends BoardPanel implements ActionListener, MyObser
                 else{
                     temp.setShot(Tile.ShotType.HIT);
                     temp.updateView();
-                    if(this.checkWin()){
+                    if(this.checkWinV2()){
                         Blackboard.getBlackboard().getStatus().setText("You Win!");
                         Blackboard.getBlackboard().setGameOver(true);
                         try {
@@ -168,6 +168,14 @@ public class OpponentBoard extends BoardPanel implements ActionListener, MyObser
                     return false;
                 }
             }
+        }
+        return true;
+    }
+
+    public boolean checkWinV2(){
+        for (Ship s: enemyShips){
+            if (!s.checkSunk())
+                return false;
         }
         return true;
     }
