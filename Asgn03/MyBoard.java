@@ -100,17 +100,6 @@ public class MyBoard extends BoardPanel implements ActionListener, MyObserver {
         }
     }
 
-    private boolean checkIfTileInShipList(List<List<Integer>> shipList, int checkTile){
-        for(List<Integer> ship: shipList){
-            for(int tile: ship){
-                if(checkTile == tile){
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
     /**
      * setting the ships for player 1
      * @param e
@@ -178,17 +167,21 @@ public class MyBoard extends BoardPanel implements ActionListener, MyObserver {
             Tile right = (t.getIndex() + 1 >=0) && (t.getIndex() + 1 <= 99) ? Blackboard.getBlackboard().getTileList().get(t.getIndex() + 1): new Tile(-1);
             //need to check if in different rows
 
-            if(checkIfTileInShipList(shipList, up.getIndex())){
-                up.tileType = Tile.TileType.DEFAULT;
-            }
-            if(checkIfTileInShipList(shipList, left.getIndex())){
-                left.tileType = Tile.TileType.DEFAULT;
-            }
-            if(checkIfTileInShipList(shipList, right.getIndex())){
-                right.tileType = Tile.TileType.DEFAULT;
-            }
-            if(checkIfTileInShipList(shipList, down.getIndex())){
-                down.tileType = Tile.TileType.DEFAULT;
+            for(List<Integer> ship: shipList){
+                for(int tile: ship){
+                    if(up.getIndex() == tile){
+                        up.tileType = Tile.TileType.DEFAULT;
+                    }
+                    if(down.getIndex() == tile){
+                        left.tileType = Tile.TileType.DEFAULT;
+                    }
+                    if(right.getIndex() == tile){
+                        right.tileType = Tile.TileType.DEFAULT;
+                    }
+                    if(down.getIndex() == tile){
+                        down.tileType = Tile.TileType.DEFAULT;
+                    }
+                }
             }
 
             //if nothing around ship tile, it is a standalone 1 square ship
