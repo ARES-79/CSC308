@@ -17,6 +17,7 @@ import java.util.List;
 public class Game extends JFrame implements ActionListener {
     private JPanel myBoard;
     private OpponentBoard opponentBoard;
+    private MyBoard MyBoardController = new MyBoard();
 
     /**
      * Main creates a new battleship window and allows it to be seen and closed properly.
@@ -36,8 +37,9 @@ public class Game extends JFrame implements ActionListener {
 
     public Game(String player){
         super(player);
-        MyBoardController myBoardController = new MyBoardController();
+
         Blackboard.getBlackboard().setMyTurn(player.equals("Player 1"));
+
 
         //menu
         JMenuBar menuBar = new JMenuBar();
@@ -85,7 +87,7 @@ public class Game extends JFrame implements ActionListener {
                 Blackboard.getBlackboard().addTile(new Tile(value));
                 value +=1;
                 shipScreen.add(Blackboard.getBlackboard().getTileList().get(Blackboard.getBlackboard().getTileList().size() -1));
-                Blackboard.getBlackboard().getTileList().get(Blackboard.getBlackboard().getTileList().size() -1).addActionListener(MyBoardController.getInstance());
+                Blackboard.getBlackboard().getTileList().get(Blackboard.getBlackboard().getTileList().size() -1).addActionListener(MyBoardController);
             }
         }
 
