@@ -4,30 +4,19 @@ import Asgn02.src.Dot;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 
-public class MyBoard extends BoardPanel {
-//    boolean ready = false;
-//    int numShipTiles = 10;
+public class MyBoard extends BoardPanel implements ActionListener {
+    int numShipTiles = 10;
     List<List<Integer>> shipList = new ArrayList<>();
-    //ArrayList<Tile> myTiles;
-    //Boolean ships = true;
-
-    //has a list of ships
-    //allows you to place the ships
-    //does not have the list of tiles
-    //show tiles in the blackboard
-
-
-    //need to show where opponent has shot!!!!!!!!!!!!!
-
-    //placing ship: blackboard.tiles.getindex -> if water, make ship
-
-    //connection between what person is seeing and what is stored in data
 
     public MyBoard() {
 //        setLayout(new GridLayout(11,11, -1, -1));
@@ -104,6 +93,102 @@ public class MyBoard extends BoardPanel {
 
     @Override
     public void update(MyObservable ob) {
-
+        Integer idx = Blackboard.getBlackboard().getShotIndex();
+        placeOppShot(idx);
     }
+
+
+    /**
+     * setting the ships for player 1
+     * @param e
+     */
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        ArrayList<Tile> shipTiles = new ArrayList<>();
+        if (e.getSource() instanceof Tile temp && numShipTiles > 0){
+            //prints out which tile was clicked
+            System.out.println(temp);
+
+            //placing ships on the screen
+            if (((Tile) e.getSource()).tileType != Tile.TileType.SHIP) {
+                Tile t = (Tile)e.getSource();
+                Blackboard.getBlackboard().getTileList().get(t.getIndex()).setTileType(Tile.TileType.SHIP);
+                numShipTiles -= 1;
+                System.out.println(Blackboard.getBlackboard().getTileList().get(t.getIndex()));
+                System.out.println("Updating view");
+                Blackboard.getBlackboard().getTileList().get(t.getIndex()).updateView();
+
+                shipTiles.add(t);
+            }
+        }
+        else if (numShipTiles == 0){
+            List<List<Integer>> ships = makeShipList(shipTiles);
+            Blackboard.getBlackboard().updateData();
+            System.out.println(ships);
+        }
+    }
+
+
+
+    // takes all the ship tiles and turns them into a 2D list of integers representing ships
+    public List<List<Integer>> makeShipList(List<Tile> shipTiles){
+        List<List<Integer>> shipList = new ArrayList<>();
+
+        shipTiles.sort(new Comparator<Tile>() {
+            @Override
+            public int compare(Tile o1, Tile o2) {
+                return 0;
+            }
+        });
+
+        while(shipTiles.size() > 0){
+            System.out.println(shipTiles);
+            Tile t = shipTiles.get(0);
+
+            Tile up = Blackboard.getBlackboard().getTileList().get(t.getIndex() - 10);
+            Tile down = Blackboard.getBlackboard().getTileList().get(t.getIndex() + 10);
+            Tile left = Blackboard.getBlackboard().getTileList().get(t.getIndex() - 1);
+            Tile right = Blackboard.getBlackboard().getTileList().get(t.getIndex() + 1);
+            //need to check if in different rows
+
+            //if nothing around ship tile, it is a standalone 1 square ship
+            if (up.tileType != Tile.TileType.SHIP && down.tileType != Tile.TileType.SHIP
+                    && left.tileType != Tile.TileType.SHIP && right.tileType != Tile.TileType.SHIP){
+                ArrayList<Integer> ship = new ArrayList<>();
+                ship.add(t.getIndex()); //to make 2D, put in its own list
+                shipList.add(ship); // add to 2D list
+                shipTiles.remove(t.getIndex()); //remove from shipTiles to avoid seeing again
+            }
+            //vertical only ship, ASSUMES WE WILL SEE TOPMOST SHIP FIRST
+            else if(down.tileType == Tile.TileType.SHIP){
+                ArrayList<Integer> ship = new ArrayList<>();
+                ship.add(t.getIndex());
+                shipTiles.remove(t);
+                while(down.tileType == Tile.TileType.SHIP){
+                    ship.add(down.getIndex());
+                    shipTiles.remove(down);
+                    down = t;
+                }
+                shipList.add(ship);
+            }
+            //horizontal only ship, ASSUMES WE WILL SEE RIGHTMOST SQUARE FIRST
+            else if(right.tileType == Tile.TileType.SHIP){
+                ArrayList<Integer> ship = new ArrayList<>();
+                ship.add(t.getIndex());
+                shipTiles.remove(t);
+                while(t.tileType == Tile.TileType.SHIP){
+                    ship.add(right.getIndex());
+                    shipTiles.remove(down);
+                    right = t;
+                }
+                shipList.add(ship);
+            }
+
+        }
+        System.out.println(shipList);
+        Blackboard.getBlackboard().setEnemyShipTiles(shipList);
+        return shipList;
+    }
+
+
 }
