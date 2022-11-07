@@ -89,10 +89,8 @@ public class OpponentBoard extends BoardPanel implements ActionListener, MyObser
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        System.out.println(Blackboard.getBlackboard().isMyTurn() + " "  + Blackboard.getBlackboard().isSentShips()
-        + " " + Blackboard.getBlackboard().isReceivedShips());
         if (e.getSource() instanceof Tile && Blackboard.getBlackboard().isMyTurn() && Blackboard.getBlackboard().isReceivedShips()
-        && Blackboard.getBlackboard().isSentShips()) {
+        && Blackboard.getBlackboard().isSentShips() && !Blackboard.getBlackboard().isGameOver()) {
             //prints out which tile was clicked
             Tile temp = (Tile) e.getSource();
             /** switch in the if statement below when the connections are set up */
@@ -113,19 +111,30 @@ public class OpponentBoard extends BoardPanel implements ActionListener, MyObser
                 }
                 else{
                     temp.setShot(Tile.ShotType.HIT);
-                    try {
-                        ServerDTO data = new ServerDTO(Tile.ShotType.HIT.toString(), temp.getIndex(), null);
-                        Blackboard.getBlackboard().getClient().sendObject(data);
-                    } catch (IOException ex) {
-                        ex.printStackTrace();
+                    temp.updateView();
+                    if(this.checkWin()){
+                        Blackboard.getBlackboard().getStatus().setText("You Win!");
+                        Blackboard.getBlackboard().setGameOver(true);
+                        try {
+                            ServerDTO data = new ServerDTO("Game over", temp.getIndex(), null);
+                            Blackboard.getBlackboard().getClient().sendObject(data);
+                        } catch (IOException ex) {
+                            ex.printStackTrace();
+                        }
+                    }else {
+                        Blackboard.getBlackboard().setMyTurn(false);
+                        Blackboard.getBlackboard().getStatus().setText("Opponents turn");
+                        try {
+                            ServerDTO data = new ServerDTO(Tile.ShotType.HIT.toString(), temp.getIndex(), null);
+                            Blackboard.getBlackboard().getClient().sendObject(data);
+                        } catch (IOException ex) {
+                            ex.printStackTrace();
+                        }
                     }
                     if (hit.checkSunk()){
                         shipSunk(hit);
                     }
                 }
-                temp.updateView();
-                Blackboard.getBlackboard().setMyTurn(false);
-                Blackboard.getBlackboard().getStatus().setText("Opponents turn");
             }
         }
     }
@@ -144,6 +153,20 @@ public class OpponentBoard extends BoardPanel implements ActionListener, MyObser
             updated = true;
             System.out.println(Blackboard.getBlackboard().getEnemyShipTiles());
         }
+    }
+
+    public boolean checkWin(){
+        List<List<Integer>> enemyShips = Blackboard.getBlackboard().getEnemyShipTiles();
+        for(List<Integer> ship : enemyShips){
+            for(Integer tile : ship) {
+                Tile shipTile = Blackboard.getBlackboard().getTileList().get(tile);
+                System.out.println(shipTile.getShot());
+                if(!shipTile.shot.equals(Tile.ShotType.HIT)){
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
 }

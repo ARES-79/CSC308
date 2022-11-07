@@ -14,7 +14,7 @@ import java.util.List;
 
 
 public class MyBoard extends BoardPanel implements ActionListener, MyObserver {
-    int numShipTiles = 10;
+    int numShipTiles = 3;
     List<List<Integer>> shipList = new ArrayList<>();
     ArrayList<Tile> shipTiles = new ArrayList<>();
 
@@ -112,7 +112,7 @@ public class MyBoard extends BoardPanel implements ActionListener, MyObserver {
             System.out.println(temp);
 
             //placing ships on the screen
-            if (((Tile) e.getSource()).tileType != Tile.TileType.SHIP) {
+            if (((Tile) e.getSource()).tileType != Tile.TileType.SHIP && !Blackboard.getBlackboard().isGameOver()) {
                 Tile t = (Tile)e.getSource();
                 Blackboard.getBlackboard().getTileList().get(t.getIndex()).setTileType(Tile.TileType.SHIP);
                 numShipTiles -= 1;

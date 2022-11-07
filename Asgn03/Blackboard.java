@@ -26,6 +26,15 @@ public class Blackboard extends MyObservable {
     private boolean receivedShips = false;
     private boolean sentShips = false;
     private boolean readyToSendShips = false;
+    private boolean gameOver = false;
+
+    public boolean isGameOver() {
+        return gameOver;
+    }
+
+    public void setGameOver(boolean gameOver) {
+        this.gameOver = gameOver;
+    }
 
     public JLabel getStatus() {
         return status;

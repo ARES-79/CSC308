@@ -29,6 +29,10 @@ public class Server implements Runnable {
                     Blackboard.getBlackboard().setEnemyShipTiles(inputObject.getShips());
                     Blackboard.getBlackboard().setReceivedShips(true);
                     Blackboard.getBlackboard().updateData();
+                } else if (inputObject.getMessage().equals("Game over")) {
+                    System.out.println("Game over");
+                    Blackboard.getBlackboard().setGameOver(true);
+                    Blackboard.getBlackboard().getStatus().setText("You lost");
                 } else {
                     Blackboard.getBlackboard().setMyTurn(true);
                     Blackboard.getBlackboard().getStatus().setText("Your turn");
