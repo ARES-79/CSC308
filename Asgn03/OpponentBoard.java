@@ -88,10 +88,10 @@ public class OpponentBoard extends BoardPanel implements ActionListener {
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() instanceof Tile) {
+        if (e.getSource() instanceof Tile A && Blackboard.getBlackboard().isMyTurn()) {
+            Blackboard.getBlackboard().setMyTurn(false);
             //prints out which tile was clicked
             Tile temp = (Tile) e.getSource();
-            System.out.println("Sent from oppoenet board" + temp);
             /** switch in the if statement below when the connections are set up */
             // also think if we need to use the ready flag or something similar
 //            if (Blackboard.getBlackboard().isMyTurn() && temp.getShot() == Tile.ShotType.DEFAULT){
