@@ -154,44 +154,54 @@ public class MyBoard extends BoardPanel implements ActionListener {
         });
 
         while(shipTiles.size() > 0){
-            System.out.println(shipTiles);
+            System.out.println("inside while");
             Tile t = shipTiles.get(0);
+            System.out.println(t);
 
-            Tile up = Blackboard.getBlackboard().getTileList().get(t.getIndex() - 10);
-            Tile down = Blackboard.getBlackboard().getTileList().get(t.getIndex() + 10);
-            Tile left = Blackboard.getBlackboard().getTileList().get(t.getIndex() - 1);
-            Tile right = Blackboard.getBlackboard().getTileList().get(t.getIndex() + 1);
+            //ArrayList<Integer> ship = new ArrayList<>();
+
+            Tile up = (t.getIndex() - 10 >=0) ? Blackboard.getBlackboard().getTileList().get(t.getIndex() - 10): new Tile(-1);
+            Tile down = (t.getIndex() + 10 >=0) ? Blackboard.getBlackboard().getTileList().get(t.getIndex() + 10): new Tile(-1);
+            Tile left = (t.getIndex() - 1 >=0) ? Blackboard.getBlackboard().getTileList().get(t.getIndex() - 1): new Tile(-1);
+            Tile right = (t.getIndex() + 1 >=0) ? Blackboard.getBlackboard().getTileList().get(t.getIndex() + 1): new Tile(-1);
             //need to check if in different rows
 
             //if nothing around ship tile, it is a standalone 1 square ship
             if (up.tileType != Tile.TileType.SHIP && down.tileType != Tile.TileType.SHIP
                     && left.tileType != Tile.TileType.SHIP && right.tileType != Tile.TileType.SHIP){
+                System.out.println("stand alone");
                 ArrayList<Integer> ship = new ArrayList<>();
                 ship.add(t.getIndex()); //to make 2D, put in its own list
                 shipList.add(ship); // add to 2D list
-                shipTiles.remove(t.getIndex()); //remove from shipTiles to avoid seeing again
+                shipTiles.remove(t); //remove from shipTiles to avoid seeing again
             }
             //vertical only ship, ASSUMES WE WILL SEE TOPMOST SHIP FIRST
             else if(down.tileType == Tile.TileType.SHIP){
+                System.out.println("vertical ship");
                 ArrayList<Integer> ship = new ArrayList<>();
                 ship.add(t.getIndex());
                 shipTiles.remove(t);
                 while(down.tileType == Tile.TileType.SHIP){
                     ship.add(down.getIndex());
                     shipTiles.remove(down);
-                    down = t;
+                    if ((down.getIndex() + 10) <= 99){
+                        down = Blackboard.getBlackboard().getTileList().get(down.getIndex() + 10);
+                    } else {break;}
                 }
                 shipList.add(ship);
             }
             //horizontal only ship, ASSUMES WE WILL SEE RIGHTMOST SQUARE FIRST
             else if(right.tileType == Tile.TileType.SHIP){
                 ArrayList<Integer> ship = new ArrayList<>();
+                System.out.println("horizontal ship");
                 ship.add(t.getIndex());
                 shipTiles.remove(t);
-                while(t.tileType == Tile.TileType.SHIP){
+                while(right.tileType == Tile.TileType.SHIP){
                     ship.add(right.getIndex());
-                    shipTiles.remove(down);
-                    right = t;
+                    shipTiles.remove(right);
+                    if ((right.getIndex() + 1) <= 99){ //CHECK IF DIFFERENT ROWS HERE
+                        right = Blackboard.getBlackboard().getTileList().get(right.getIndex() + 1);
+                    } else {break;}
                 }
                 shipList.add(ship);
             }
