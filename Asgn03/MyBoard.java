@@ -187,6 +187,7 @@ public class MyBoard extends BoardPanel implements ActionListener {
         }
         System.out.println(shipList);
         Blackboard.getBlackboard().setEnemyShipTiles(shipList);
+        Blackboard.getBlackboard().updateData();
         return shipList;
     }
 
