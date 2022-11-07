@@ -52,14 +52,29 @@ public class Game extends JFrame implements ActionListener {
         reset.addActionListener(this);
 
         //center
-        setLayout(new GridLayout(1, 3));
+        //setLayout(new GridLayout(1, 3));
+        setLayout(new BorderLayout());
         //the two JLabels will be changed to Board Panels
         opponentBoard = new OpponentBoard();
         myBoard = setUpMyBoard();
 
-        add(opponentBoard);
-        add(myBoard);
-        add(Blackboard.getBlackboard().getStatus());
+        JPanel boards =  new JPanel();
+        boards.setLayout(new GridLayout(1, 2));
+        boards.add(opponentBoard);
+        boards.add(myBoard);
+
+        JPanel labels = new JPanel();
+        labels.setLayout(new GridLayout(1, 2));
+        JTextField myLabel = new JTextField("My Board");
+        JTextField oppLabel = new JTextField("Opponent's Board");
+        myLabel.setText("MY BOARD");
+        oppLabel.setText("OPPONENT'S BOARD");
+        labels.add(oppLabel);
+        labels.add(myLabel);
+
+        add(boards, BorderLayout.CENTER);
+        add(Blackboard.getBlackboard().getStatus(), BorderLayout.NORTH);
+        add(labels, BorderLayout.SOUTH);
         myBoard.setBackground(new Color(100, 0, 250, 50));
         opponentBoard.setBackground(new Color(250, 50, 0, 50));
 
