@@ -60,6 +60,8 @@ public class Game extends JFrame implements ActionListener {
         add(opponentBoard);
         add(myBoard);
         add(Blackboard.getBlackboard().getStatus());
+        myBoard.setBackground(new Color(100, 0, 250, 50));
+        opponentBoard.setBackground(new Color(250, 50, 0, 50));
 
 //        Blackboard.getBlackboard().getTileList().get(55).setTileType(Tile.TileType.SHIP);
 //        Blackboard.getBlackboard().getTileList().get(55).updateView();

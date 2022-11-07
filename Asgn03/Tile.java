@@ -53,6 +53,7 @@ public class Tile extends JButton {
         shot = ShotType.DEFAULT;
         setBorder(BorderFactory.createLineBorder(Color.BLACK));
         setOpaque(true);
+        updateView();
 //        addActionListener(MyBoardController.getInstance());
     }
 
@@ -104,13 +105,13 @@ public class Tile extends JButton {
     public void updateColor(){
         switch(tileType){
             case DEFAULT:
-                setBackground(Color.LIGHT_GRAY);
+                setBackground(new Color(0,230,255));
                 break;
             case WATER:
                 setBackground(Color.CYAN);
                 break;
             case SHIP:
-                setBackground(Color.GRAY);
+                setBackground(Color.white);
                 break;
             case SUNK:
                 setBackground(Color.RED);
