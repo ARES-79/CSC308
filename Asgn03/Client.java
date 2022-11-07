@@ -53,8 +53,9 @@ public class Client implements Runnable, MyObserver {
     }
 
     @Override
-    public void update(MyObservable ob) {
-
+    public void update(MyObservable ob) throws IOException {
+         ServerDTO serverDTO = new ServerDTO("Ships", 0, Blackboard.getBlackboard().getMyShipTiles());
+         this.sendObject(serverDTO);
     }
 
 //    public static void main(String[] args) throws IOException {

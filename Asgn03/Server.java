@@ -35,6 +35,9 @@ public class Server implements Runnable {
                     temp.setShot(Tile.ShotType.MISS);
                     temp.updateView();
                 }
+                else if(inputObject.getMessage().equals("Ships")){
+                    Blackboard.getBlackboard().setEnemyShipTiles(inputObject.getShips());
+                }
 
             }
         } catch (Exception e) {
