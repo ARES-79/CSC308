@@ -20,9 +20,11 @@ public class Blackboard extends MyObservable {
     private Client client;
 
     //opponentShips
-    private int shotIndex = -1;
+    private int shotIndex;
     private boolean myTurn;
     private boolean receivedShips = false;
+    private boolean sentShips = false;
+    private boolean readyToSendShips = false;
     private static Blackboard blackboard;
 
     /**
@@ -61,6 +63,22 @@ public class Blackboard extends MyObservable {
         return shotIndex;
     }
 
+    public boolean isSentShips() {
+        return sentShips;
+    }
+
+    public boolean isReadyToSendShips() {
+        return readyToSendShips;
+    }
+
+    public void setReadyToSendShips(boolean readyToSendShips) {
+        this.readyToSendShips = readyToSendShips;
+    }
+
+    public void setSentShips(boolean sentShips) {
+        this.sentShips = sentShips;
+    }
+
     public boolean isReceivedShips() {
         return receivedShips;
     }
@@ -85,6 +103,7 @@ public class Blackboard extends MyObservable {
      * updateData - calls notifying which then updates all the observers
     */
     public void updateData() throws IOException {
+        System.out.println(this + "is notifying");
         notifying();
     }
 
