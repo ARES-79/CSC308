@@ -52,13 +52,14 @@ public class Game extends JFrame implements ActionListener {
         reset.addActionListener(this);
 
         //center
-        setLayout(new GridLayout(1, 2));
+        setLayout(new GridLayout(1, 3));
         //the two JLabels will be changed to Board Panels
         opponentBoard = new OpponentBoard();
         myBoard = setUpMyBoard();
 
         add(opponentBoard);
         add(myBoard);
+        add(Blackboard.getBlackboard().getStatus());
 
 //        Blackboard.getBlackboard().getTileList().get(55).setTileType(Tile.TileType.SHIP);
 //        Blackboard.getBlackboard().getTileList().get(55).updateView();
@@ -73,7 +74,6 @@ public class Game extends JFrame implements ActionListener {
         shipScreen.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2));
 
         //List<Tile> tileList = new ArrayList<>();
-
         shipScreen.add(new JLabel(""));
         int value = 0;
         for (int i = 1; i < 121; i++) {

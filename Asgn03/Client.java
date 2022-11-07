@@ -20,7 +20,7 @@ public class Client implements Runnable, MyObserver {
         this.setUp();
     }
 
-    private void setUp(){
+    private void setUp() {
         boolean scanning = true;
         while (scanning) {
             try {
@@ -55,12 +55,20 @@ public class Client implements Runnable, MyObserver {
 
     @Override
     public void update(MyObservable ob) throws IOException {
-        System.out.println("In: "+ this);
-        if(!Blackboard.getBlackboard().isSentShips() && Blackboard.getBlackboard().isReadyToSendShips()) {
+        System.out.println("In: " + this);
+        if (!Blackboard.getBlackboard().isSentShips() && Blackboard.getBlackboard().isReadyToSendShips()) {
             System.out.println(this + "is sending");
             ServerDTO serverDTO = new ServerDTO("Ships", 0, Blackboard.getBlackboard().getMyShipTiles());
             this.sendObject(serverDTO);
             Blackboard.getBlackboard().setSentShips(true);
+            Blackboard.getBlackboard().getStatus().setText("Waiting for Opponent to finish setup");
+        }
+        if(Blackboard.getBlackboard().isSentShips() && Blackboard.getBlackboard().isReceivedShips()){
+            if (Blackboard.getBlackboard().isMyTurn()) {
+                Blackboard.getBlackboard().getStatus().setText("Your Turn");
+            } else {
+                Blackboard.getBlackboard().getStatus().setText("Opponents turn");
+            }
         }
     }
 

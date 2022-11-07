@@ -1,5 +1,6 @@
 package Asgn03;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +26,12 @@ public class Blackboard extends MyObservable {
     private boolean receivedShips = false;
     private boolean sentShips = false;
     private boolean readyToSendShips = false;
+
+    public JLabel getStatus() {
+        return status;
+    }
+
+    private JLabel status = new JLabel("Please place 10 tiles to select your ships") ;
     private static Blackboard blackboard;
 
     /**

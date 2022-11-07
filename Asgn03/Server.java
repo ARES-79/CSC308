@@ -11,6 +11,7 @@ public class Server implements Runnable {
     private ObjectInputStream in;
     private int port;
     private Blackboard blackboard = Blackboard.getBlackboard();
+
     public Server(int port) {
         this.port = port;
     }
@@ -21,25 +22,25 @@ public class Server implements Runnable {
             clientSocket = serverSocket.accept();
             out = new ObjectOutputStream(clientSocket.getOutputStream());
             in = new ObjectInputStream(clientSocket.getInputStream());
-
             ServerDTO inputObject = null;
             while ((inputObject = (ServerDTO) in.readObject()) != null) {
-                Blackboard.getBlackboard().setMyTurn(true);
-                if(inputObject.getMessage().equals(Tile.ShotType.HIT.toString())){
-                    Tile temp = blackboard.getTileList().get(inputObject.getTileIndex());
-                    temp.setShot(Tile.ShotType.HIT);
-                    temp.updateView();
-                }
-                else if(inputObject.getMessage().equals(Tile.ShotType.MISS.toString())){
-                    Tile temp = blackboard.getTileList().get(inputObject.getTileIndex());
-                    temp.setShot(Tile.ShotType.MISS);
-                    temp.updateView();
-                }
-                else if(inputObject.getMessage().equals("Ships")){
+                if (inputObject.getMessage().equals("Ships")) {
                     System.out.println(this + "recieved");
                     Blackboard.getBlackboard().setEnemyShipTiles(inputObject.getShips());
                     Blackboard.getBlackboard().setReceivedShips(true);
                     Blackboard.getBlackboard().updateData();
+                } else {
+                    Blackboard.getBlackboard().setMyTurn(true);
+                    Blackboard.getBlackboard().getStatus().setText("Your turn");
+                    if (inputObject.getMessage().equals(Tile.ShotType.HIT.toString())) {
+                        Tile temp = blackboard.getTileList().get(inputObject.getTileIndex());
+                        temp.setShot(Tile.ShotType.HIT);
+                        temp.updateView();
+                    } else if (inputObject.getMessage().equals(Tile.ShotType.MISS.toString())) {
+                        Tile temp = blackboard.getTileList().get(inputObject.getTileIndex());
+                        temp.setShot(Tile.ShotType.MISS);
+                        temp.updateView();
+                    }
                 }
 
             }

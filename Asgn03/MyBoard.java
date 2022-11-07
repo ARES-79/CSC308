@@ -107,7 +107,7 @@ public class MyBoard extends BoardPanel implements ActionListener, MyObserver {
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() instanceof Tile temp && numShipTiles > 0){
+        if (e.getSource() instanceof Tile temp && numShipTiles >= 0){
             //prints out which tile was clicked
             System.out.println(temp);
 
@@ -122,21 +122,21 @@ public class MyBoard extends BoardPanel implements ActionListener, MyObserver {
 
                 shipTiles.add(t);
             }
-        }
-        else if (numShipTiles == 0){
-            List<List<Integer>> ships = null;
-            try {
-                ships = makeShipList(shipTiles);
-            } catch (IOException ex) {
-                ex.printStackTrace();
+            if (numShipTiles == 0){
+                List<List<Integer>> ships = null;
+                try {
+                    ships = makeShipList(shipTiles);
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+                try {
+                    Blackboard.getBlackboard().updateData();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+                numShipTiles -= 1;
+                System.out.println(ships);
             }
-            try {
-                Blackboard.getBlackboard().updateData();
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-            numShipTiles -= 1;
-            System.out.println(ships);
         }
     }
 
