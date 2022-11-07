@@ -102,7 +102,7 @@ public class OpponentBoard extends BoardPanel implements ActionListener {
                 if (hit == null){
                     temp.setShot(Tile.ShotType.MISS);
                     try {
-                        ServerDTO data = new ServerDTO(Tile.ShotType.MISS.toString(), temp.getIndex());
+                        ServerDTO data = new ServerDTO(Tile.ShotType.MISS.toString(), temp.getIndex(), null);
                         Blackboard.getBlackboard().getClient().sendObject(data);
                     } catch (IOException ex) {
                         ex.printStackTrace();
@@ -111,7 +111,7 @@ public class OpponentBoard extends BoardPanel implements ActionListener {
                 else{
                     temp.setShot(Tile.ShotType.HIT);
                     try {
-                        ServerDTO data = new ServerDTO(Tile.ShotType.HIT.toString(), temp.getIndex());
+                        ServerDTO data = new ServerDTO(Tile.ShotType.HIT.toString(), temp.getIndex(), null);
                         Blackboard.getBlackboard().getClient().sendObject(data);
                     } catch (IOException ex) {
                         ex.printStackTrace();
