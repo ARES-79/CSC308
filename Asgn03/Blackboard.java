@@ -22,14 +22,6 @@ public class Blackboard extends MyObservable {
     private Client client;
     private Game gameBoard;
 
-    public Game getGameBoard() {
-        return gameBoard;
-    }
-
-    public void setGameBoard(Game gameBoard) {
-        this.gameBoard = gameBoard;
-    }
-
     //opponentShips
     private int shotIndex;
     private boolean myTurn;
@@ -149,6 +141,14 @@ public class Blackboard extends MyObservable {
         return myShipTiles;
     }
 
+    public Game getGameBoard() {
+        return gameBoard;
+    }
+
+    public void setGameBoard(Game gameBoard) {
+        this.gameBoard = gameBoard;
+    }
+
     public void reset(){
 
         this.myTileList = new ArrayList<>();
@@ -158,7 +158,7 @@ public class Blackboard extends MyObservable {
         this.sentShips = false;
         this.readyToSendShips = false;
         this.gameOver = false;
-        this.status.setText("Please place 10 tiles to select your ships");
+        this.status.setText("Please place 17 tiles to select your ships");
         Game temp = new Game(this.gameBoard.getPlayer());
         temp.setSize(1000, 600);
         temp.setVisible(true);
