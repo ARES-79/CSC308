@@ -33,6 +33,8 @@ public class Server implements Runnable {
                     System.out.println("Game over");
                     Blackboard.getBlackboard().setGameOver(true);
                     Blackboard.getBlackboard().getStatus().setText("You lost");
+                } else if(inputObject.getMessage().equals("Reset")){
+                    Blackboard.getBlackboard().reset();
                 } else {
                     Blackboard.getBlackboard().setMyTurn(true);
                     Blackboard.getBlackboard().getStatus().setText("Your turn");
