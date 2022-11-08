@@ -28,12 +28,13 @@ public class Player1Main {
     public static void main(String[] args) throws InterruptedException {
         Player1Main player1 = new Player1Main();
         player1.serverSetup();
-        Game window = new Game("Player1");
+        Game game = new Game("Player1");
         Blackboard blackboard = Blackboard.getBlackboard();
+        blackboard.setGameBoard(game);
         blackboard.setClient(player1.getClient());
-        window.setSize(1000, 600);
-        window.setVisible(true);
-        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        blackboard.getGameBoard().setSize(1000, 600);
+        blackboard.getGameBoard().setVisible(true);
+        blackboard.getGameBoard().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
     public Client getClient() {

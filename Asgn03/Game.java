@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +19,12 @@ public class Game extends JFrame implements ActionListener {
     private JPanel myBoard;
     private OpponentBoard opponentBoard;
     private MyBoard MyBoardController = new MyBoard();
+
+    public String getPlayer() {
+        return Player;
+    }
+
+    private String Player;
 
     /**
      * Main creates a new battleship window and allows it to be seen and closed properly.
@@ -35,8 +42,9 @@ public class Game extends JFrame implements ActionListener {
      * necessary for a GUI with battleship functionality.
      */
 
-    public Game(String player){
+    public Game(String player) {
         super(player);
+        this.Player = player;
 
         Blackboard.getBlackboard().setMyTurn(player.equals("Player1"));
 
@@ -58,7 +66,7 @@ public class Game extends JFrame implements ActionListener {
         opponentBoard = new OpponentBoard();
         myBoard = setUpMyBoard();
 
-        JPanel boards =  new JPanel();
+        JPanel boards = new JPanel();
         boards.setLayout(new GridLayout(1, 2));
         boards.add(opponentBoard);
         boards.add(myBoard);
@@ -85,7 +93,7 @@ public class Game extends JFrame implements ActionListener {
 
     }
 
-    public JPanel setUpMyBoard(){
+    public JPanel setUpMyBoard() {
         JPanel shipScreen = new JPanel();
         shipScreen.setLayout(new GridLayout(11, 11, -1, -1));
         shipScreen.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2));
@@ -100,12 +108,11 @@ public class Game extends JFrame implements ActionListener {
                 int alpha = (i % 10 == 0) ? 10 : i % 10;
                 shipScreen.add(new JLabel("   " + Character.toString((char) (alpha + 64))));
 
-            }
-            else{
+            } else {
                 Blackboard.getBlackboard().addTile(new Tile(value));
-                value +=1;
-                shipScreen.add(Blackboard.getBlackboard().getTileList().get(Blackboard.getBlackboard().getTileList().size() -1));
-                Blackboard.getBlackboard().getTileList().get(Blackboard.getBlackboard().getTileList().size() -1).addActionListener(MyBoardController);
+                value += 1;
+                shipScreen.add(Blackboard.getBlackboard().getTileList().get(Blackboard.getBlackboard().getTileList().size() - 1));
+                Blackboard.getBlackboard().getTileList().get(Blackboard.getBlackboard().getTileList().size() - 1).addActionListener(MyBoardController);
             }
         }
 
@@ -114,8 +121,16 @@ public class Game extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        System.out.println(e.getActionCommand());
-//        if (e.getActionCommand().equals("Reset")){
+//        System.out.println(e.getActionCommand());
+        if (e.getActionCommand().equals("Reset")) {
+            Blackboard blackboard = Blackboard.getBlackboard();
+            ServerDTO transfer = new ServerDTO("Reset", -1, null);
+            try {
+                blackboard.getClient().sendObject(transfer);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+            blackboard.reset();
 //            myBoard = setUpMyBoard();
 //            opponentBoard = new OpponentBoard();
 //            Blackboard.getBlackboard().
@@ -124,6 +139,7 @@ public class Game extends JFrame implements ActionListener {
 //            //opponentShips
 //            int shotIndex;
 //            boolean myTurn;
-//        }
+        }
     }
+
 }

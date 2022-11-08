@@ -3,6 +3,7 @@ package Asgn03.Player2;
 import Asgn03.Blackboard;
 import Asgn03.Client;
 import Asgn03.Game;
+import Asgn03.Player1.Player1Main;
 import Asgn03.Server;
 
 import javax.swing.*;
@@ -29,11 +30,12 @@ public class Player2Main {
     public static void main(String[] args) throws IOException, InterruptedException {
         Player2Main player2 = new Player2Main();
         player2.serverSetup();
-        Game window = new Game("Player2");
+        Game game = new Game("Player2");
         Blackboard blackboard = Blackboard.getBlackboard();
+        blackboard.setGameBoard(game);
         blackboard.setClient(player2.client);
-        window.setSize(1000, 600);
-        window.setVisible(true);
-        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        blackboard.getGameBoard().setSize(1000, 600);
+        blackboard.getGameBoard().setVisible(true);
+        blackboard.getGameBoard().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 }
