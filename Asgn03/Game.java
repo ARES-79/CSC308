@@ -65,8 +65,8 @@ public class Game extends JFrame implements ActionListener {
 
         JPanel labels = new JPanel();
         labels.setLayout(new GridLayout(1, 2));
-        JTextField myLabel = new JTextField("My Board");
-        JTextField oppLabel = new JTextField("Opponent's Board");
+        JLabel myLabel = new JLabel("My Board");
+        JLabel oppLabel = new JLabel("Opponent's Board");
         myLabel.setText("MY BOARD");
         oppLabel.setText("OPPONENT'S BOARD");
         labels.add(oppLabel);

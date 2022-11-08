@@ -1,6 +1,7 @@
 package Asgn03;
 
 import javax.swing.*;
+import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,19 +28,6 @@ public class Blackboard extends MyObservable {
     private boolean sentShips = false;
     private boolean readyToSendShips = false;
     private boolean gameOver = false;
-
-    public boolean isGameOver() {
-        return gameOver;
-    }
-
-    public void setGameOver(boolean gameOver) {
-        this.gameOver = gameOver;
-    }
-
-    public JLabel getStatus() {
-        return status;
-    }
-
     private JLabel status = new JLabel("Please place 10 tiles to select your ships") ;
     private static Blackboard blackboard;
 
@@ -113,6 +101,20 @@ public class Blackboard extends MyObservable {
 
     public void setMyTurn(boolean myTurn) {
         this.myTurn = myTurn;
+    }
+
+    public boolean isGameOver() {
+        return gameOver;
+    }
+
+    public void setGameOver(boolean gameOver) {
+        this.gameOver = gameOver;
+    }
+
+    public JLabel getStatus() {
+        status.setHorizontalTextPosition(2);
+        status.setPreferredSize(new Dimension(30,30));
+        return status;
     }
 
     /**
