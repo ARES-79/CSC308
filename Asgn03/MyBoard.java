@@ -80,8 +80,10 @@ public class MyBoard extends BoardPanel implements ActionListener, MyObserver {
             //check if hit or miss
             if (tiles.contains(idx)){
                 t.setShot(Tile.ShotType.HIT);
+                t.setTileType(Tile.TileType.WATER);
             } else{
                 t.setShot(Tile.ShotType.MISS);
+                t.setTileType(Tile.TileType.WATER);
             }
         }
 
