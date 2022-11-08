@@ -158,19 +158,6 @@ public class OpponentBoard extends BoardPanel implements ActionListener, MyObser
         }
     }
 
-    public boolean checkWin(){
-        List<List<Integer>> enemyShips = Blackboard.getBlackboard().getEnemyShipTiles();
-        for(List<Integer> ship : enemyShips){
-            for(Integer tile : ship) {
-                Tile shipTile = Blackboard.getBlackboard().getTileList().get(tile);
-                System.out.println(shipTile.getShot());
-                if(!shipTile.shot.equals(Tile.ShotType.HIT)){
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
 
     /**
      * checkWinV2
