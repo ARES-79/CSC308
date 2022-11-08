@@ -100,7 +100,6 @@ public class MyBoard extends BoardPanel implements ActionListener, MyObserver {
         }
     }
 
-
     /**
      * setting the ships for player 1
      * @param e
@@ -141,7 +140,6 @@ public class MyBoard extends BoardPanel implements ActionListener, MyObserver {
     }
 
 
-
     // takes all the ship tiles and turns them into a 2D list of integers representing ships
     public List<List<Integer>> makeShipList(List<Tile> shipTiles) throws IOException {
         List<List<Integer>> shipList = new ArrayList<>();
@@ -174,8 +172,14 @@ public class MyBoard extends BoardPanel implements ActionListener, MyObserver {
                     if(up.getIndex() == tile){
                         up.tileType = Tile.TileType.DEFAULT;
                     }
-                    if(left.getIndex() == tile){
+                    if(down.getIndex() == tile){
                         left.tileType = Tile.TileType.DEFAULT;
+                    }
+                    if(right.getIndex() == tile){
+                        right.tileType = Tile.TileType.DEFAULT;
+                    }
+                    if(down.getIndex() == tile){
+                        down.tileType = Tile.TileType.DEFAULT;
                     }
                 }
             }
@@ -194,11 +198,13 @@ public class MyBoard extends BoardPanel implements ActionListener, MyObserver {
                 ship.add(t.getIndex());
                 shipTiles.remove(t);
                 while(down.tileType == Tile.TileType.SHIP){
-                    ship.add(down.getIndex());
-                    shipTiles.remove(down);
-                    if ((down.getIndex() + 10) <= 99){
-                        down = Blackboard.getBlackboard().getTileList().get(down.getIndex() + 10);
-                    } else {break;}
+                    //if(!checkIfTileInShipList(shipList, down.getIndex())){
+                        ship.add(down.getIndex());
+                        shipTiles.remove(down);
+                        if ((down.getIndex() + 10) <= 99){
+                            down = Blackboard.getBlackboard().getTileList().get(down.getIndex() + 10);
+                        } else {break;}
+                    //}
                 }
                 shipList.add(ship);
             }
@@ -208,11 +214,15 @@ public class MyBoard extends BoardPanel implements ActionListener, MyObserver {
                 ship.add(t.getIndex());
                 shipTiles.remove(t);
                 while(right.tileType == Tile.TileType.SHIP && (Math.floorDiv(t.getIndex(), 10) == Math.floorDiv(right.getIndex(), 10))){
-                    ship.add(right.getIndex());
-                    shipTiles.remove(right);
-                    if ((right.getIndex() + 1) <= 99 && (Math.floorDiv(t.getIndex(), 10) == Math.floorDiv(right.getIndex(), 10))){ //CHECK IF DIFFERENT ROWS HERE
-                        right = Blackboard.getBlackboard().getTileList().get(right.getIndex() + 1);
-                    } else {break;}
+                    //if(!checkIfTileInShipList(shipList, right.getIndex())) {
+                        ship.add(right.getIndex());
+                        shipTiles.remove(right);
+                        if ((right.getIndex() + 1) <= 99 && (Math.floorDiv(t.getIndex(), 10) == Math.floorDiv(right.getIndex(), 10))) { //CHECK IF DIFFERENT ROWS HERE
+                            right = Blackboard.getBlackboard().getTileList().get(right.getIndex() + 1);
+                        } else {
+                            break;
+                        }
+                    //}
                 }
                 shipList.add(ship);
             }
