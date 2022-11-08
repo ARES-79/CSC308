@@ -37,7 +37,7 @@ public class Blackboard extends MyObservable {
     private boolean sentShips = false;
     private boolean readyToSendShips = false;
     private boolean gameOver = false;
-    private JLabel status = new JLabel("Please place 10 tiles to select your ships") ;
+    private JLabel status = new JLabel("Please place 17 tiles to select your ships") ;
     private static Blackboard blackboard;
 
     /**
