@@ -14,7 +14,7 @@ import java.util.List;
 
 
 public class MyBoard extends BoardPanel implements ActionListener, MyObserver {
-    int numShipTiles = 3;
+    int numShipTiles = 10;
     List<List<Integer>> shipList = new ArrayList<>();
     ArrayList<Tile> shipTiles = new ArrayList<>();
 

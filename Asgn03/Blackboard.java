@@ -19,6 +19,15 @@ public class Blackboard extends MyObservable {
     private List<List<Integer>> enemyShipTiles = new ArrayList<>();
     private List<List<Integer>> myShipTiles = new ArrayList<>();
     private Client client;
+    private Game gameBoard;
+
+    public Game getGameBoard() {
+        return gameBoard;
+    }
+
+    public void setGameBoard(Game gameBoard) {
+        this.gameBoard = gameBoard;
+    }
 
     //opponentShips
     private int shotIndex;
@@ -136,5 +145,23 @@ public class Blackboard extends MyObservable {
 
     public List<List<Integer>> getMyShipTiles() {
         return myShipTiles;
+    }
+
+    public void reset(){
+
+        this.myTileList = new ArrayList<>();
+        this.enemyShipTiles = new ArrayList<>();
+        this.myShipTiles = new ArrayList<>();
+        this.receivedShips = false;
+        this.sentShips = false;
+        this.readyToSendShips = false;
+        this.gameOver = false;
+        this.status.setText("Please place 10 tiles to select your ships");
+        Game temp = new Game(this.gameBoard.getPlayer());
+        temp.setSize(1000, 600);
+        temp.setVisible(true);
+        temp.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.gameBoard.dispose();
+        this.gameBoard = temp;
     }
 }
