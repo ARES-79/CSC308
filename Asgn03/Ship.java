@@ -16,7 +16,7 @@ public class Ship {
 
     /**
      * Ship Constructor
-     * @param tiles - list of tile indeces that make up a ship
+     * @param tiles - list of tile indices that make up a ship
      */
     public Ship(List<Integer> tiles){
         this.startingTiles = tiles;
