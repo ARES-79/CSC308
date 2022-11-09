@@ -18,7 +18,6 @@ public class OpponentBoard extends BoardPanel implements ActionListener, MyObser
 
     List<Tile> enemyWaters = new ArrayList<>();
     List<Ship> enemyShips = new ArrayList<>();
-    //test code to prove concept
     boolean updated = false;
 
     /**
@@ -28,8 +27,6 @@ public class OpponentBoard extends BoardPanel implements ActionListener, MyObser
         setLayout(new GridLayout(11,11, -1, -1));
         setBorder(BorderFactory.createEmptyBorder(2,2,2,2));
         Blackboard.getBlackboard().addObserver(this);
-
-        //List<Tile> tileList = new ArrayList<>();
 
         add(new JLabel(""));
         int value = 0;
@@ -48,13 +45,6 @@ public class OpponentBoard extends BoardPanel implements ActionListener, MyObser
                 value +=1;
             }
         }
-
-        /** Test code to show that it works*/
-//        Blackboard.getBlackboard().setMyTurn(true);
-        //enemyShips.add(new Ship( new ArrayList<>(List.of(1,2,3,4,5))));
-        //enemyShips.add(new Ship( new ArrayList<>(List.of(20,30,40))));
-        //enemyShips.add(new Ship( new ArrayList<>(List.of(99, 89, 79 ))));
-
     }
 
     /**
@@ -91,13 +81,8 @@ public class OpponentBoard extends BoardPanel implements ActionListener, MyObser
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() instanceof Tile && Blackboard.getBlackboard().isMyTurn() && Blackboard.getBlackboard().isReceivedShips()
         && Blackboard.getBlackboard().isSentShips() && !Blackboard.getBlackboard().isGameOver()) {
-            //prints out which tile was clicked
             Tile temp = (Tile) e.getSource();
-            /** switch in the if statement below when the connections are set up */
-            // also think if we need to use the ready flag or something similar
-//            if (Blackboard.getBlackboard().isMyTurn() && temp.getShot() == Tile.ShotType.DEFAULT){
             if (temp.getShot() == Tile.ShotType.DEFAULT){
-                /** set the shot index in blackBoard or send it straight through the client*/
                 Blackboard.getBlackboard().setShotIndex(temp.getIndex());
                 Ship hit = checkAllShips(temp.getIndex());
                 if (hit == null){
@@ -149,7 +134,6 @@ public class OpponentBoard extends BoardPanel implements ActionListener, MyObser
     @Override
     public void update(MyObservable ob) {
         if (!updated && Blackboard.getBlackboard().isReceivedShips()) {
-            //for (List<Integer> tileGroup : Blackboard.getBlackboard().getEnemyShipTiles())
             for (List<Integer> tileGroup : ((Blackboard)ob).getEnemyShipTiles()) {
                 enemyShips.add(new Ship(tileGroup));
             }

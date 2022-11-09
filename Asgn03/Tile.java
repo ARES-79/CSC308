@@ -16,7 +16,6 @@ public class Tile extends JButton {
      */
     enum TileType{
         DEFAULT,
-        WATER,
         SHIP,
         SUNK
     }
@@ -29,13 +28,6 @@ public class Tile extends JButton {
         HIT,
         MISS
     }
-
-    /*
-    Ex:
-      JButton shootScreen = new JButton("This will be the shooting screen.");
-      shootScreen.setBorderPainted( false );
-      shootScreen.addActionListener(controller);
-    * */
 
     TileType tileType;
     ShotType shot;
@@ -54,9 +46,12 @@ public class Tile extends JButton {
         setBorder(BorderFactory.createLineBorder(Color.BLACK));
         setOpaque(true);
         updateView();
-//        addActionListener(MyBoardController.getInstance());
     }
 
+    /**
+     * toString Override method to print out the information of a tile
+     * @return String representation of the Tile
+     */
     @Override
     public String toString(){
         return "index: " + index +
@@ -65,12 +60,37 @@ public class Tile extends JButton {
     }
 
     //various getters
+
+    /**
+     * getTileType
+     * @return TileType Enum representing tile characteristics
+     */
     public TileType getTileType() {return tileType;}
+
+    /**
+     * getShotType
+     * @return ShotType Enum representing tile shot history
+     */
     public ShotType getShot() {return shot;}
+
+    /**
+     * getIndex
+     * @return tile index field - location in tile list
+     */
     public int getIndex() {return index;}
 
     //necessary setters
+
+    /**
+     * setTileType
+     * @param tileType - TileType Enum that is desired for the tile
+     */
     public void setTileType(TileType tileType) {this.tileType = tileType;}
+
+    /**
+     * setShotType
+     * @param shot - ShotType Enum that is desired for the tile
+     */
     public void setShot(ShotType shot) {this.shot = shot;}
 
     /**
@@ -106,9 +126,6 @@ public class Tile extends JButton {
         switch(tileType){
             case DEFAULT:
                 setBackground(new Color(0,230,255));
-                break;
-            case WATER:
-                setBackground(Color.CYAN);
                 break;
             case SHIP:
                 setBackground(Color.white);

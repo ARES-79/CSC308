@@ -10,7 +10,6 @@ import java.util.List;
 
 /**
  * Assignment 03
- *
  * @author Andrew Estrada
  * @version 1.0
  * Game Class - battleship app with GUI and functionality
@@ -19,29 +18,13 @@ public class Game extends JFrame implements ActionListener {
     private JPanel myBoard;
     private OpponentBoard opponentBoard;
     private MyBoard MyBoardController = new MyBoard();
-
-    public String getPlayer() {
-        return Player;
-    }
-
     private String Player;
 
     /**
-     * Main creates a new battleship window and allows it to be seen and closed properly.
-     */
-//    public static void main(String[] args) {
-//        Game window = new Game(null);
-//        window.setSize(1000, 600);
-//        window.setVisible(true);
-//        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//    }
-
-    /**
      * Game constructor
-     * Uses inheritance from JFrame to create a window with the elements
-     * necessary for a GUI with battleship functionality.
+     * @param player - String to determine the title of the window - Player1 or Player2
+     *      Uses inheritance from JFrame to create a for a GUI a battleship
      */
-
     public Game(String player) {
         super(player);
         this.Player = player;
@@ -60,9 +43,7 @@ public class Game extends JFrame implements ActionListener {
         reset.addActionListener(this);
 
         //center
-        //setLayout(new GridLayout(1, 3));
         setLayout(new BorderLayout());
-        //the two JLabels will be changed to Board Panels
         opponentBoard = new OpponentBoard();
         myBoard = setUpMyBoard();
 
@@ -86,27 +67,33 @@ public class Game extends JFrame implements ActionListener {
         myBoard.setBackground(new Color(100, 0, 250, 50));
         opponentBoard.setBackground(new Color(250, 50, 0, 50));
 
-//        Blackboard.getBlackboard().getTileList().get(55).setTileType(Tile.TileType.SHIP);
-//        Blackboard.getBlackboard().getTileList().get(55).updateView();
-//        myBoard.getMyTiles().get(5).setShot(Tile.ShotType.MISS);
-//        myBoard.getMyTiles().get(5).updateView();
-
     }
 
+    /**
+     * getPlayer
+     * @return String representing player number - Player1 or Player2
+     */
+    public String getPlayer() {
+        return Player;
+    }
+
+    /**
+     * setUpMyBoard
+     * @return JPanel - Jpanel set up to be a MyBoard
+     */
     public JPanel setUpMyBoard() {
         JPanel shipScreen = new JPanel();
         shipScreen.setLayout(new GridLayout(11, 11, -1, -1));
         shipScreen.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2));
 
-        //List<Tile> tileList = new ArrayList<>();
         shipScreen.add(new JLabel(""));
         int value = 0;
         for (int i = 1; i < 121; i++) {
             if (i < 11)
-                shipScreen.add(new JLabel("     " + String.valueOf(i)));
+                shipScreen.add(new JLabel("     " + i));
             else if (i % 11 == 0) {
                 int alpha = (i % 10 == 0) ? 10 : i % 10;
-                shipScreen.add(new JLabel("   " + Character.toString((char) (alpha + 64))));
+                shipScreen.add(new JLabel("   " + (char) (alpha + 64)));
 
             } else {
                 Blackboard.getBlackboard().addTile(new Tile(value));
@@ -119,9 +106,14 @@ public class Game extends JFrame implements ActionListener {
         return shipScreen;
     }
 
+    /**
+     * actionPerformed - implementation from ActionListener interface
+     *      provides interactivity for the Reset menu item elements
+     *      also logs the request to reset
+     * @param e ActionEvent notifying that a screen item has been selected
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
-//        System.out.println(e.getActionCommand());
         if (e.getActionCommand().equals("Reset")) {
             Blackboard blackboard = Blackboard.getBlackboard();
             ServerDTO transfer = new ServerDTO("Reset", -1, null);
@@ -131,14 +123,6 @@ public class Game extends JFrame implements ActionListener {
                 ex.printStackTrace();
             }
             blackboard.reset();
-//            myBoard = setUpMyBoard();
-//            opponentBoard = new OpponentBoard();
-//            Blackboard.getBlackboard().
-//            private java.util.List<Tile> myTileList = new ArrayList<>();
-//            private List<List<Integer>> enemyShipTiles = new ArrayList<>();
-//            //opponentShips
-//            int shotIndex;
-//            boolean myTurn;
         }
     }
 
