@@ -10,7 +10,6 @@ import java.util.List;
 
 /**
  * Assignment 03
- *
  * @author Andrew Estrada
  * @version 1.0
  * Game Class - battleship app with GUI and functionality
@@ -115,7 +114,6 @@ public class Game extends JFrame implements ActionListener {
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-//        System.out.println(e.getActionCommand());
         if (e.getActionCommand().equals("Reset")) {
             Blackboard blackboard = Blackboard.getBlackboard();
             ServerDTO transfer = new ServerDTO("Reset", -1, null);
@@ -125,14 +123,6 @@ public class Game extends JFrame implements ActionListener {
                 ex.printStackTrace();
             }
             blackboard.reset();
-//            myBoard = setUpMyBoard();
-//            opponentBoard = new OpponentBoard();
-//            Blackboard.getBlackboard().
-//            private java.util.List<Tile> myTileList = new ArrayList<>();
-//            private List<List<Integer>> enemyShipTiles = new ArrayList<>();
-//            //opponentShips
-//            int shotIndex;
-//            boolean myTurn;
         }
     }
 

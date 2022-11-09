@@ -134,7 +134,6 @@ public class OpponentBoard extends BoardPanel implements ActionListener, MyObser
     @Override
     public void update(MyObservable ob) {
         if (!updated && Blackboard.getBlackboard().isReceivedShips()) {
-            //for (List<Integer> tileGroup : Blackboard.getBlackboard().getEnemyShipTiles())
             for (List<Integer> tileGroup : ((Blackboard)ob).getEnemyShipTiles()) {
                 enemyShips.add(new Ship(tileGroup));
             }
