@@ -14,7 +14,7 @@ import java.util.List;
 
 
 public class MyBoard extends BoardPanel implements ActionListener, MyObserver {
-    int numShipTiles = 10;
+    int numShipTiles = 17;
     List<List<Integer>> shipList = new ArrayList<>();
     ArrayList<Tile> shipTiles = new ArrayList<>();
 
@@ -102,6 +102,17 @@ public class MyBoard extends BoardPanel implements ActionListener, MyObserver {
         }
     }
 
+    private boolean checkIfTileInShipList(List<List<Integer>>shipList, int checkTile){
+        for(List<Integer> ship: shipList) {
+            for (int tile : ship) {
+                if (checkTile == tile) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     /**
      * setting the ships for player 1
      * @param e
@@ -169,26 +180,28 @@ public class MyBoard extends BoardPanel implements ActionListener, MyObserver {
             Tile right = (t.getIndex() + 1 >=0) && (t.getIndex() + 1 <= 99) ? Blackboard.getBlackboard().getTileList().get(t.getIndex() + 1): new Tile(-1);
             //need to check if in different rows
 
-            for(List<Integer> ship: shipList){
-                for(int tile: ship){
-                    if(up.getIndex() == tile){
-                        up.tileType = Tile.TileType.DEFAULT;
-                    }
-                    if(down.getIndex() == tile){
-                        left.tileType = Tile.TileType.DEFAULT;
-                    }
-                    if(right.getIndex() == tile){
-                        right.tileType = Tile.TileType.DEFAULT;
-                    }
-                    if(down.getIndex() == tile){
-                        down.tileType = Tile.TileType.DEFAULT;
-                    }
-                }
-            }
+//            for(List<Integer> ship: shipList){
+//                for(int tile: ship){
+//                    if(up.getIndex() == tile){
+//                        up.tileType = Tile.TileType.DEFAULT;
+//                    }
+//                    if(left.getIndex() == tile){
+//                        left.tileType = Tile.TileType.DEFAULT;
+//                    }
+//                    if(right.getIndex() == tile){
+//                        right.tileType = Tile.TileType.DEFAULT;
+//                    }
+//                    if(down.getIndex() == tile){
+//                        down.tileType = Tile.TileType.DEFAULT;
+//                    }
+//                }
+//            }
 
             //if nothing around ship tile, it is a standalone 1 square ship
-            if (up.tileType != Tile.TileType.SHIP && down.tileType != Tile.TileType.SHIP
-                    && left.tileType != Tile.TileType.SHIP && right.tileType != Tile.TileType.SHIP){
+            if ((up.tileType != Tile.TileType.SHIP || checkIfTileInShipList(shipList, up.getIndex())) &&
+                    (down.tileType != Tile.TileType.SHIP  || checkIfTileInShipList(shipList, down.getIndex())) &&
+                    (left.tileType != Tile.TileType.SHIP || checkIfTileInShipList(shipList, left.getIndex()))  &&
+                    (right.tileType != Tile.TileType.SHIP || checkIfTileInShipList(shipList, right.getIndex()))){
                 ArrayList<Integer> ship = new ArrayList<>();
                 ship.add(t.getIndex()); //to make 2D, put in its own list
                 shipList.add(ship); // add to 2D list
@@ -199,14 +212,12 @@ public class MyBoard extends BoardPanel implements ActionListener, MyObserver {
                 ArrayList<Integer> ship = new ArrayList<>();
                 ship.add(t.getIndex());
                 shipTiles.remove(t);
-                while(down.tileType == Tile.TileType.SHIP){
-                    //if(!checkIfTileInShipList(shipList, down.getIndex())){
-                        ship.add(down.getIndex());
-                        shipTiles.remove(down);
-                        if ((down.getIndex() + 10) <= 99){
-                            down = Blackboard.getBlackboard().getTileList().get(down.getIndex() + 10);
-                        } else {break;}
-                    //}
+                while(down.tileType == Tile.TileType.SHIP && !checkIfTileInShipList(shipList, down.getIndex())){
+                    ship.add(down.getIndex());
+                    shipTiles.remove(down);
+                    if ((down.getIndex() + 10) <= 99){
+                        down = Blackboard.getBlackboard().getTileList().get(down.getIndex() + 10);
+                    } else {break;}
                 }
                 shipList.add(ship);
             }
@@ -215,16 +226,14 @@ public class MyBoard extends BoardPanel implements ActionListener, MyObserver {
                 ArrayList<Integer> ship = new ArrayList<>();
                 ship.add(t.getIndex());
                 shipTiles.remove(t);
-                while(right.tileType == Tile.TileType.SHIP && (Math.floorDiv(t.getIndex(), 10) == Math.floorDiv(right.getIndex(), 10))){
-                    //if(!checkIfTileInShipList(shipList, right.getIndex())) {
-                        ship.add(right.getIndex());
-                        shipTiles.remove(right);
-                        if ((right.getIndex() + 1) <= 99 && (Math.floorDiv(t.getIndex(), 10) == Math.floorDiv(right.getIndex(), 10))) { //CHECK IF DIFFERENT ROWS HERE
-                            right = Blackboard.getBlackboard().getTileList().get(right.getIndex() + 1);
-                        } else {
-                            break;
-                        }
-                    //}
+                while(right.tileType == Tile.TileType.SHIP && (Math.floorDiv(t.getIndex(), 10) == Math.floorDiv(right.getIndex(), 10)) && !checkIfTileInShipList(shipList, right.getIndex())){
+                    ship.add(right.getIndex());
+                    shipTiles.remove(right);
+                    if ((right.getIndex() + 1) <= 99 && (Math.floorDiv(t.getIndex(), 10) == Math.floorDiv(right.getIndex(), 10))) { //CHECK IF DIFFERENT ROWS HERE
+                        right = Blackboard.getBlackboard().getTileList().get(right.getIndex() + 1);
+                    } else {
+                        break;
+                    }
                 }
                 shipList.add(ship);
             }
