@@ -10,7 +10,6 @@ import java.util.List;
 
 /**
  * Assignment 03
- *
  * @author Andrew Estrada
  * @version 1.0
  * Game Class - battleship app with GUI and functionality
@@ -55,10 +54,8 @@ public class Game extends JFrame implements ActionListener {
 
         JPanel labels = new JPanel();
         labels.setLayout(new GridLayout(1, 2));
-        JLabel myLabel = new JLabel("My Board");
-        JLabel oppLabel = new JLabel("Opponent's Board");
-        myLabel.setText("MY BOARD");
-        oppLabel.setText("OPPONENT'S BOARD");
+        JLabel myLabel = new JLabel("MY BOARD");
+        JLabel oppLabel = new JLabel("OPPONENT'S BOARD");
         labels.add(oppLabel);
         labels.add(myLabel);
 
@@ -115,7 +112,6 @@ public class Game extends JFrame implements ActionListener {
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-//        System.out.println(e.getActionCommand());
         if (e.getActionCommand().equals("Reset")) {
             Blackboard blackboard = Blackboard.getBlackboard();
             ServerDTO transfer = new ServerDTO("Reset", -1, null);
@@ -125,14 +121,6 @@ public class Game extends JFrame implements ActionListener {
                 ex.printStackTrace();
             }
             blackboard.reset();
-//            myBoard = setUpMyBoard();
-//            opponentBoard = new OpponentBoard();
-//            Blackboard.getBlackboard().
-//            private java.util.List<Tile> myTileList = new ArrayList<>();
-//            private List<List<Integer>> enemyShipTiles = new ArrayList<>();
-//            //opponentShips
-//            int shotIndex;
-//            boolean myTurn;
         }
     }
 

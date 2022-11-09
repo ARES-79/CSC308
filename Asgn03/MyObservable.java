@@ -4,12 +4,10 @@ import java.io.IOException;
 import java.util.LinkedList;
 
 /**
- * Assignment 02
- * @author Andrew Estrada
- * @author Jamie Luna
+ * Assignment 03
  * @author Mitashi Parikh
  * @version 1.0
- * Ass2.MyObservable Abstract Class - an abstract class which contains the list of observers and a notifying method
+ * Ass3.MyObservable Abstract Class - an abstract class which contains the list of observers and a notifying method
  */
 public abstract class MyObservable {
     private LinkedList<MyObserver> observers = new LinkedList<MyObserver>();

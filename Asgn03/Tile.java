@@ -16,7 +16,6 @@ public class Tile extends JButton {
      */
     enum TileType{
         DEFAULT,
-        WATER,
         SHIP,
         SUNK
     }
@@ -127,9 +126,6 @@ public class Tile extends JButton {
         switch(tileType){
             case DEFAULT:
                 setBackground(new Color(0,230,255));
-                break;
-            case WATER:
-                setBackground(Color.CYAN);
                 break;
             case SHIP:
                 setBackground(Color.white);

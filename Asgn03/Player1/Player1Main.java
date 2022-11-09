@@ -7,24 +7,37 @@ import Asgn03.Server;
 
 import javax.swing.*;
 
+
+/**
+ * Assignment 03
+ *
+ * @author Archie Jones
+ * @version 1.0
+ * Client Class - Creates Player 1 of the game.
+ */
 public class Player1Main {
     private Client client;
-    private Server server;
-    private Thread serverThread;
-    private Thread clientThread;
-    public Player1Main(){}
 
-
-    public synchronized void serverSetup() throws InterruptedException {
-        this.server = new Server(6666);
-        this.client = new Client("localhost", 4444);
-        this.serverThread = new Thread(this.server);
-        this.clientThread = new Thread(this.client);
-        this.serverThread.start();
-        this.clientThread.start();
-        this.clientThread.join();
+    public Player1Main() {
     }
 
+    /**
+     * Creates a new client and server for player 1 and puts them in different threads, so they can run
+     * at the same time.
+     */
+    public synchronized void serverSetup() throws InterruptedException {
+        this.client = new Client("localhost", 4444);
+        Server server = new Server(6666);
+        Thread serverThread = new Thread(server);
+        Thread clientThread = new Thread(this.client);
+        serverThread.start();
+        clientThread.start();
+        clientThread.join();
+    }
+
+    /**
+     * Sets up the game and blackboard for player 1
+     */
     public static void main(String[] args) throws InterruptedException {
         Player1Main player1 = new Player1Main();
         player1.serverSetup();
@@ -39,25 +52,5 @@ public class Player1Main {
 
     public Client getClient() {
         return client;
-    }
-
-    public void setClient(Client client) {
-        this.client = client;
-    }
-
-    public Server getServer() {
-        return server;
-    }
-
-    public void setServer(Server server) {
-        this.server = server;
-    }
-
-    public Thread getServerThread() {
-        return serverThread;
-    }
-
-    public void setServerThread(Thread serverThread) {
-        this.serverThread = serverThread;
     }
 }

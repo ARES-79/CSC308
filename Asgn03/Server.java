@@ -4,63 +4,70 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+/**
+ * Assignment 03
+ *
+ * @author Archie Jones
+ * @version 1.0
+ * Server Class - Handles server side actions of client server interactions.
+ */
 public class Server implements Runnable {
-    private ServerSocket serverSocket;
-    private Socket clientSocket;
-    private ObjectOutputStream out;
-    private ObjectInputStream in;
-    private int port;
-    private Blackboard blackboard = Blackboard.getBlackboard();
+    private final int port;
 
     public Server(int port) {
         this.port = port;
     }
 
+    /**
+     * Sets up the server and handles input from opponent client using the handInput method.
+     */
     public void run() {
         try {
-            serverSocket = new ServerSocket(this.port);
-            clientSocket = serverSocket.accept();
-            out = new ObjectOutputStream(clientSocket.getOutputStream());
-            in = new ObjectInputStream(clientSocket.getInputStream());
-            ServerDTO inputObject = null;
+            ServerSocket serverSocket = new ServerSocket(this.port);
+            Socket clientSocket = serverSocket.accept();
+            ObjectInputStream in = new ObjectInputStream(clientSocket.getInputStream());
+            ServerDTO inputObject;
             while ((inputObject = (ServerDTO) in.readObject()) != null) {
-                if (inputObject.getMessage().equals("Ships")) {
-                    System.out.println(this + "recieved");
-                    Blackboard.getBlackboard().setEnemyShipTiles(inputObject.getShips());
-                    Blackboard.getBlackboard().setReceivedShips(true);
-                    Blackboard.getBlackboard().updateData();
-                } else if (inputObject.getMessage().equals("Game over")) {
-                    System.out.println("Game over");
-                    Blackboard.getBlackboard().setGameOver(true);
-                    Blackboard.getBlackboard().getStatus().setText("You lost");
-                } else if(inputObject.getMessage().equals("Reset")){
-                    Blackboard.getBlackboard().reset();
-                } else {
-                    Blackboard.getBlackboard().setMyTurn(true);
-                    Blackboard.getBlackboard().getStatus().setText("Your turn");
-                    if (inputObject.getMessage().equals(Tile.ShotType.HIT.toString())) {
-                        Tile temp = blackboard.getTileList().get(inputObject.getTileIndex());
-                        temp.setShot(Tile.ShotType.HIT);
-                        temp.updateView();
-                    } else if (inputObject.getMessage().equals(Tile.ShotType.MISS.toString())) {
-                        Tile temp = blackboard.getTileList().get(inputObject.getTileIndex());
-                        temp.setShot(Tile.ShotType.MISS);
-                        temp.updateView();
-                    }
-                }
-
+                this.handleInput(inputObject);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-//    public static void main(String[] args) throws IOException {
-//        Game window = new Game();
-//        window.setSize(1000, 600);
-//        window.setVisible(true);
-//        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        Server server = new Server();
-//        server.start(6666);
-//    }
+    /**
+     * Class that handles when the opponent sends over data, including when they send
+     * their ships in game setup and when they take a shot.
+     *
+     * @param inputObject- the ServerDTO that was sent from the opponents client
+     * @throws IOException- Exception needed for updating the blackboard data
+     */
+    public void handleInput(ServerDTO inputObject) throws IOException {
+        Blackboard blackboard = Blackboard.getBlackboard();
+        switch (inputObject.getMessage()) {
+            case "Ships" -> {
+                blackboard.setEnemyShipTiles(inputObject.getShips());
+                blackboard.setReceivedShips(true);
+                blackboard.updateData();
+            }
+            case "Game over" -> {
+                blackboard.setGameOver(true);
+                blackboard.getStatus().setText("You lost");
+            }
+            case "Reset" -> blackboard.reset();
+            default -> {
+                blackboard.setMyTurn(true);
+                blackboard.getStatus().setText("Your turn");
+                if (inputObject.getMessage().equals(Tile.ShotType.HIT.toString())) {
+                    Tile temp = blackboard.getTileList().get(inputObject.getTileIndex());
+                    temp.setShot(Tile.ShotType.HIT);
+                    temp.updateView();
+                } else if (inputObject.getMessage().equals(Tile.ShotType.MISS.toString())) {
+                    Tile temp = blackboard.getTileList().get(inputObject.getTileIndex());
+                    temp.setShot(Tile.ShotType.MISS);
+                    temp.updateView();
+                }
+            }
+        }
+    }
 }
