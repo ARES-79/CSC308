@@ -3,12 +3,17 @@ package Asgn03;
 import java.io.*;
 import java.net.Socket;
 
+/**
+ * Assignment 03
+ *
+ * @author Archie Jones
+ * @version 1.0
+ * Client Class - Handles client side actions of client server interactions.
+ */
 public class Client implements Runnable, MyObserver {
-    private Socket clientSocket;
     private ObjectOutputStream out;
-    private ObjectInputStream in;
-    private String ip;
-    private int port;
+    private final String ip;
+    private final int port;
 
     public Client(String ip, int port) {
         this.ip = ip;
@@ -20,13 +25,15 @@ public class Client implements Runnable, MyObserver {
         this.setUp();
     }
 
+    /**
+     * During setUp, the client will continuously try and make a connection with the server until one is made
+     */
     private void setUp() {
         boolean scanning = true;
         while (scanning) {
             try {
-                clientSocket = new Socket(this.ip, this.port);
+                Socket clientSocket = new Socket(this.ip, this.port);
                 out = new ObjectOutputStream(clientSocket.getOutputStream());
-                in = new ObjectInputStream(clientSocket.getInputStream());
                 scanning = false;
                 System.out.println("Connection Established");
                 notify();
@@ -41,46 +48,37 @@ public class Client implements Runnable, MyObserver {
         }
     }
 
+    /**
+     * @param data -An instance of ServerDTO which contains info about the players shot or ships
+     * @throws IOException - An IOException is thrown in case sending the object fails.
+     */
     public void sendObject(ServerDTO data) throws IOException {
         out.writeObject(data);
         out.flush();
-        System.out.println("message sent");
     }
 
-    public void stopConnection() throws IOException {
-        in.close();
-        out.close();
-        clientSocket.close();
-    }
 
+    /**
+     * Handles the setup of the board and sending the users placed ships to the opponents board.
+     *
+     * @param ob- An instance of MyObservable as part of the Observer Design Pattern.
+     * @throws IOException- Exception is thrown for the sendObject function
+     */
     @Override
     public void update(MyObservable ob) throws IOException {
-        System.out.println("In: " + this);
-        if (!Blackboard.getBlackboard().isSentShips() && Blackboard.getBlackboard().isReadyToSendShips()) {
-            System.out.println(this + "is sending");
-            ServerDTO serverDTO = new ServerDTO("Ships", 0, Blackboard.getBlackboard().getMyShipTiles());
+        Blackboard blackboard = Blackboard.getBlackboard();
+        if (!blackboard.isSentShips() && blackboard.isReadyToSendShips()) {
+            ServerDTO serverDTO = new ServerDTO("Ships", 0, blackboard.getMyShipTiles());
             this.sendObject(serverDTO);
-            Blackboard.getBlackboard().setSentShips(true);
-            Blackboard.getBlackboard().getStatus().setText("Waiting for Opponent to finish setup");
+            blackboard.setSentShips(true);
+            blackboard.getStatus().setText("Waiting for Opponent to finish setup");
         }
-        if(Blackboard.getBlackboard().isSentShips() && Blackboard.getBlackboard().isReceivedShips()){
-            if (Blackboard.getBlackboard().isMyTurn()) {
-                Blackboard.getBlackboard().getStatus().setText("Your Turn");
+        if (blackboard.isSentShips() && blackboard.isReceivedShips()) {
+            if (blackboard.isMyTurn()) {
+                blackboard.getStatus().setText("Your Turn");
             } else {
-                Blackboard.getBlackboard().getStatus().setText("Opponents turn");
+                blackboard.getStatus().setText("Opponents turn");
             }
         }
     }
-
-//    public static void main(String[] args) throws IOException {
-//        Client client = new Client();
-//        client.startConnection("127.0.0.1", 6666);
-////        client.sendMessage("Sent from client");
-//        client.sendMessage("Exiti");
-////        Game window = new Game();
-////        window.setSize(1000, 600);
-////        window.setVisible(true);
-////        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        System.out.println("Done with client");
-//    }
 }
