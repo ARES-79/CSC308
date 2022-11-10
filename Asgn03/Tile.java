@@ -6,6 +6,7 @@ import java.awt.*;
 /**
  * Assignment 03
  * @author Andrew Estrada
+ * @author Jamie Luna
  * @version 1.0
  * Tile - class in charge of containing data of a cell on the board
  */
@@ -125,11 +126,9 @@ public class Tile extends JButton {
     public void updateColor(){
         switch(tileType){
             case DEFAULT:
-                System.out.println("Tile is default");
                 setBackground(new Color(0,230,255));
                 break;
             case SHIP:
-                System.out.println("Tile is a ship");
                 setBackground(Color.white);
                 break;
             case SUNK:

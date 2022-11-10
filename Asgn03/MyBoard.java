@@ -1,50 +1,28 @@
 package Asgn03;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.*;
 import java.util.List;
 
 /**
  * Assignment 03
- *
  * @author Jamie Luna
- * @version 1.0
+ * @author Andrew Estrada
+ * @version 2.0
  * MyBoard - controls the logic behind placing ships and seeing where your opponent shoots on your board
  */
-public class MyBoard extends BoardPanel implements ActionListener, MyObserver {
+public class MyBoard extends BoardPanel implements MyObserver { //ActionListener,
     private int numShipTiles = 17;
     private final List<List<Integer>> shipList = new ArrayList<>();
     private final ArrayList<Tile> shipTiles = new ArrayList<>();
 
     /**
-     * MyBoard constructor - adds an Observer to know when an opponent clicks this board
+     * MyBoard constructor - adds an Observer to know when an opponent clicks this board and sets up GUI
      */
     public MyBoard() {
-        super();
-        Blackboard.getBlackboard().addObserver(this);
-        setLayout(new GridLayout(11, 11, -1, -1));
-        setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2));
-        Blackboard.getBlackboard().addObserver(this);
-
-        add(new JLabel(""));
-        int value = 0;
-        for (int i = 1; i < 121; i++) {
-            if (i < 11) {
-                add(new JLabel("     " + i));
-            } else if (i % 11 == 0) {
-                int alpha = (i % 10 == 0) ? 10 : i % 10;
-                add(new JLabel("   " + (char) (alpha + 64)));
-            } else {
-                Blackboard.getBlackboard().addTile(new Tile(value));
-                value += 1;
-                add(Blackboard.getBlackboard().getTileList().get(Blackboard.getBlackboard().getTileList().size() - 1));
-                Blackboard.getBlackboard().getTileList().get(Blackboard.getBlackboard().getTileList().size() - 1).addActionListener(this);
-            }
-        }
+        super("MyBoard");
+        Blackboard.getBlackboard().setMyTileList(super.getGenericList());
+        super.getMyBoardController().setMyboard(this);
     }
 
     /**
@@ -105,19 +83,13 @@ public class MyBoard extends BoardPanel implements ActionListener, MyObserver {
     }
 
     /**
-     * setting the ships for player 1
-     *
-     * @param e
+     * placeShipPiece - function to update info and GUI
+     * @param t - Tile pressed to place a ship
      */
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        if (e.getSource() instanceof Tile temp && numShipTiles >= 0) {
-            //prints out which tile was clicked
-            System.out.println(temp);
-
+    public void placeShipPiece(Tile t) {
+        if (numShipTiles >= 0) {
             //placing ships on the screen
-            if (((Tile) e.getSource()).tileType != Tile.TileType.SHIP && !Blackboard.getBlackboard().isGameOver()) {
-                Tile t = (Tile) e.getSource();
+            if (t.tileType != Tile.TileType.SHIP && !Blackboard.getBlackboard().isGameOver()) {
                 Blackboard.getBlackboard().getTileList().get(t.getIndex()).setTileType(Tile.TileType.SHIP);
                 numShipTiles -= 1;
                 System.out.println(Blackboard.getBlackboard().getTileList().get(t.getIndex()));
