@@ -56,6 +56,10 @@ public class Blackboard extends MyObservable {
         return myTileList;
     }
 
+    public void setMyTileList(List<Tile> myTileList) {
+        this.myTileList = myTileList;
+    }
+
     /**
      * addTile - adds the next tile to myTileList which contains all the tiles on the board
      * @param t - Tile object to be added to myTileList
