@@ -125,11 +125,9 @@ public class Tile extends JButton {
     public void updateColor(){
         switch(tileType){
             case DEFAULT:
-                System.out.println("Tile is default");
                 setBackground(new Color(0,230,255));
                 break;
             case SHIP:
-                System.out.println("Tile is a ship");
                 setBackground(Color.white);
                 break;
             case SUNK:
