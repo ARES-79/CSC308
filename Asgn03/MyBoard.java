@@ -26,6 +26,7 @@ public class MyBoard extends BoardPanel implements ActionListener, MyObserver {
     public MyBoard() {
         super("MyBoard");
         Blackboard.getBlackboard().setMyTileList(super.getGenericList());
+        super.getMyBoardController().setMyboard(this);
 //        Blackboard.getBlackboard().addObserver(this);
 //        setLayout(new GridLayout(11, 11, -1, -1));
 //        setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2));

@@ -18,8 +18,8 @@ import java.util.List;
  * BoardPanel - Abstraction to create hierarchy for different Board objects.
  */
 public class BoardPanel extends JPanel implements MyObserver { //implements MouseEvent
-    MyBoardController myBoardController;
-    OpponentBoardController opponentBoardController;
+    MyBoardController myBoardController = new MyBoardController();
+    OpponentBoardController opponentBoardController = new OpponentBoardController();
     List<Tile> genericList = new ArrayList<>();
     /**
      * BoardPanel constructor - calls JPanel constructor
@@ -54,6 +54,14 @@ public class BoardPanel extends JPanel implements MyObserver { //implements Mous
 
     public List<Tile> getGenericList() {
         return genericList;
+    }
+
+    public MyBoardController getMyBoardController() {
+        return myBoardController;
+    }
+
+    public OpponentBoardController getOpponentBoardController() {
+        return opponentBoardController;
     }
 
     /**

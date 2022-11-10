@@ -25,6 +25,8 @@ public class OpponentBoard extends BoardPanel implements ActionListener, MyObser
      */
     public OpponentBoard() {
         super("OpponentBoard");
+        enemyWaters = super.getGenericList();
+        super.getOpponentBoardController().setOpponentBoard(this);
 //        setLayout(new GridLayout(11,11, -1, -1));
 //        setBorder(BorderFactory.createEmptyBorder(2,2,2,2));
 //        Blackboard.getBlackboard().addObserver(this);
