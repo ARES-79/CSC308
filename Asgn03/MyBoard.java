@@ -10,9 +10,9 @@ import java.util.List;
 
 /**
  * Assignment 03
- *
  * @author Jamie Luna
- * @version 1.0
+ * @author Andrew Estrada
+ * @version 2.0
  * MyBoard - controls the logic behind placing ships and seeing where your opponent shoots on your board
  */
 public class MyBoard extends BoardPanel implements MyObserver { //ActionListener,
@@ -106,6 +106,10 @@ public class MyBoard extends BoardPanel implements MyObserver { //ActionListener
         return false;
     }
 
+    /**
+     * placeShipPiece - function to update info and GUI
+     * @param t - Tile pressed to place a ship
+     */
     public void placeShipPiece(Tile t) {
         if (numShipTiles >= 0) {
             //placing ships on the screen

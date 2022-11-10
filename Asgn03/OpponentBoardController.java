@@ -3,9 +3,19 @@ package Asgn03;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * Assignment 03
+ * @author Andrew Estrada
+ * @version 2.0
+ * OpponentBoardController - connects the GUI buttons with the model for the opponent board
+ */
 public class OpponentBoardController implements ActionListener {
     OpponentBoard opponentBoard;
 
+    /**
+     * setOpponentBoard setter
+     * @param opponentBoard - Opponent Board to be used
+     */
     public void setOpponentBoard(OpponentBoard opponentBoard) {
         this.opponentBoard = opponentBoard;
     }

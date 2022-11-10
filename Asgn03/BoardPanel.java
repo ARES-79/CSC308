@@ -12,8 +12,8 @@ import java.util.List;
 
 /**
  * Assignment 03
- *
  * @author Jamie Luna
+ * @author Andrew Estrada
  * @version 1.0
  * BoardPanel - Abstraction to create hierarchy for different Board objects.
  */

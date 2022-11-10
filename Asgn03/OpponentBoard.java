@@ -23,27 +23,6 @@ public class OpponentBoard extends BoardPanel implements MyObserver { //ActionLi
         super("OpponentBoard");
         enemyWaters = super.getGenericList();
         super.getOpponentBoardController().setOpponentBoard(this);
-//        setLayout(new GridLayout(11,11, -1, -1));
-//        setBorder(BorderFactory.createEmptyBorder(2,2,2,2));
-//        Blackboard.getBlackboard().addObserver(this);
-//
-//        add(new JLabel(""));
-//        int value = 0;
-//        for( int i = 1; i<121; i++) {
-//            if (i < 11){
-//                add(new JLabel("     " + i));
-//            }
-//            else if (i % 11 == 0){
-//                int alpha = (i%10 == 0) ? 10 : i%10;
-//                add(new JLabel("   " + (char) (alpha + 64)));
-//            }
-//            else{
-//                enemyWaters.add(new Tile(value));
-//                add(enemyWaters.get(enemyWaters.size() -1));
-//                enemyWaters.get(enemyWaters.size() -1).addActionListener(this);
-//                value +=1;
-//            }
-//        }
     }
 
     /**
@@ -71,7 +50,10 @@ public class OpponentBoard extends BoardPanel implements MyObserver { //ActionLi
         }
     }
 
-
+    /**
+     * shootTile - update info and GUI for a shot placed
+     * @param temp - Tile clicked to place a shot
+     */
     public void shootTile(Tile temp) {
         if (temp.getShot() == Tile.ShotType.DEFAULT){
             Blackboard.getBlackboard().setShotIndex(temp.getIndex());
