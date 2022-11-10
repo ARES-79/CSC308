@@ -15,9 +15,8 @@ import java.util.List;
  * Game Class - battleship app with GUI and functionality
  */
 public class Game extends JFrame implements ActionListener {
-    private JPanel myBoard;
+    private MyBoard myBoard;
     private OpponentBoard opponentBoard;
-    private MyBoard MyBoardController = new MyBoard();
     private String Player;
 
     /**
@@ -44,8 +43,8 @@ public class Game extends JFrame implements ActionListener {
 
         //center
         setLayout(new BorderLayout());
-        opponentBoard = new OpponentBoard();
-        myBoard = setUpMyBoard();
+        this.opponentBoard = new OpponentBoard();
+        this.myBoard = new MyBoard();
 
         JPanel boards = new JPanel();
         boards.setLayout(new GridLayout(1, 2));
@@ -79,30 +78,30 @@ public class Game extends JFrame implements ActionListener {
      * setUpMyBoard
      * @return JPanel - Jpanel set up to be a MyBoard
      */
-    public JPanel setUpMyBoard() {
-        JPanel shipScreen = new JPanel();
-        shipScreen.setLayout(new GridLayout(11, 11, -1, -1));
-        shipScreen.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2));
-
-        shipScreen.add(new JLabel(""));
-        int value = 0;
-        for (int i = 1; i < 121; i++) {
-            if (i < 11)
-                shipScreen.add(new JLabel("     " + i));
-            else if (i % 11 == 0) {
-                int alpha = (i % 10 == 0) ? 10 : i % 10;
-                shipScreen.add(new JLabel("   " + (char) (alpha + 64)));
-
-            } else {
-                Blackboard.getBlackboard().addTile(new Tile(value));
-                value += 1;
-                shipScreen.add(Blackboard.getBlackboard().getTileList().get(Blackboard.getBlackboard().getTileList().size() - 1));
-                Blackboard.getBlackboard().getTileList().get(Blackboard.getBlackboard().getTileList().size() - 1).addActionListener(MyBoardController);
-            }
-        }
-
-        return shipScreen;
-    }
+//    public JPanel setUpMyBoard() {
+//        JPanel shipScreen = new JPanel();
+//        shipScreen.setLayout(new GridLayout(11, 11, -1, -1));
+//        shipScreen.setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2));
+//
+//        shipScreen.add(new JLabel(""));
+//        int value = 0;
+//        for (int i = 1; i < 121; i++) {
+//            if (i < 11)
+//                shipScreen.add(new JLabel("     " + i));
+//            else if (i % 11 == 0) {
+//                int alpha = (i % 10 == 0) ? 10 : i % 10;
+//                shipScreen.add(new JLabel("   " + (char) (alpha + 64)));
+//
+//            } else {
+//                Blackboard.getBlackboard().addTile(new Tile(value));
+//                value += 1;
+//                shipScreen.add(Blackboard.getBlackboard().getTileList().get(Blackboard.getBlackboard().getTileList().size() - 1));
+//                Blackboard.getBlackboard().getTileList().get(Blackboard.getBlackboard().getTileList().size() - 1).addActionListener(MyBoardController);
+//            }
+//        }
+//
+//        return shipScreen;
+//    }
 
     /**
      * actionPerformed - implementation from ActionListener interface
