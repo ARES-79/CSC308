@@ -52,6 +52,10 @@ public class BoardPanel extends JPanel implements MyObserver { //implements Mous
         }
     }
 
+    public List<Tile> getGenericList() {
+        return genericList;
+    }
+
     /**
      * Following the Observer pattern, BoardPanel has an update() method
      * since it is an observer
