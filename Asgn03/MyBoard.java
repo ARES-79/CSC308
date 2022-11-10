@@ -1,24 +1,30 @@
 package Asgn03;
 
-import Asgn02.src.Dot;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.util.*;
 import java.util.List;
 
-
+/**
+ * Assignment 03
+ *
+ * @author Jamie Luna
+ * @version 1.0
+ * MyBoard - controls the logic behind placing ships and seeing where your opponent shoots on your board
+ */
 public class MyBoard extends BoardPanel implements ActionListener, MyObserver {
-    int numShipTiles = 17;
-    List<List<Integer>> shipList = new ArrayList<>();
-    ArrayList<Tile> shipTiles = new ArrayList<>();
+    private int numShipTiles = 17;
+    private final List<List<Integer>> shipList = new ArrayList<>();
+    private final ArrayList<Tile> shipTiles = new ArrayList<>();
 
+    /**
+     * MyBoard constructor - adds an Observer to know when an opponent clicks this board
+     */
     public MyBoard() {
+        super();
         Blackboard.getBlackboard().addObserver(this);
         setLayout(new GridLayout(11, 11, -1, -1));
         setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2));
@@ -40,19 +46,6 @@ public class MyBoard extends BoardPanel implements ActionListener, MyObserver {
             }
         }
     }
-
-//
-//        for(int i = 0; i<size; i++){
-//            myTiles.add(new Tile(i));
-//            screen.add(myTiles.get(i));
-//        }
-//
-//
-//    public void placeShip(){
-//        List<Tile> tiles = Blackboard.getBlackboard().getTileList();
-//
-//        //MyBoardController.getInstance().actionPerformed();
-//    }
 
     /**
      * Shows where the opponent has taken a shot
@@ -87,10 +80,11 @@ public class MyBoard extends BoardPanel implements ActionListener, MyObserver {
 
     }
 
-    public List<List<Integer>> getShipList() {
-        return shipList;
-    }
-
+    /**
+     * Places the opponents shot on the screen whenever they take a shot
+     *
+     * @param ob the blackboard object that has been updated
+     */
     @Override
     public void update(MyObservable ob) {
         if (Blackboard.getBlackboard().isReceivedShips()) {
@@ -151,49 +145,27 @@ public class MyBoard extends BoardPanel implements ActionListener, MyObserver {
     }
 
 
-    // takes all the ship tiles and turns them into a 2D list of integers representing ships
+    /**
+     * Takes all the ship tiles and turns them into a 2D list of integers representing ships
+     *
+     * @param shipTiles the tiles that have been turned into ships
+     * @return the list of list of indices ships grouped together
+     * @throws IOException
+     */
     public List<List<Integer>> makeShipList(List<Tile> shipTiles) throws IOException {
         List<List<Integer>> shipList = new ArrayList<>();
 
-        System.out.println("shipTiles in making ships: ");
-        System.out.println(shipTiles);
-
         Collections.sort(shipTiles, (s1, s2) -> (int) (s1.getIndex() - s2.getIndex()));
-//        shipTiles.sort(new Comparator<Tile>() {
-//            @Override
-//            public int compare(Tile o1, Tile o2) {
-//                return 0;
-//            }
-//        });
-
-        System.out.println("after sorting: ");
-        System.out.println(shipTiles);
 
         while (shipTiles.size() > 0) {
             Tile t = shipTiles.get(0);
+
 
             Tile up = (t.getIndex() - 10 >= 0) && (t.getIndex() - 10 <= 99) ? Blackboard.getBlackboard().getTileList().get(t.getIndex() - 10) : new Tile(-1);
             Tile down = (t.getIndex() + 10 >= 0) && (t.getIndex() + 10 <= 99) ? Blackboard.getBlackboard().getTileList().get(t.getIndex() + 10) : new Tile(-1);
             Tile left = (t.getIndex() - 1 >= 0) && (t.getIndex() - 1 <= 99) ? Blackboard.getBlackboard().getTileList().get(t.getIndex() - 1) : new Tile(-1);
             Tile right = (t.getIndex() + 1 >= 0) && (t.getIndex() + 1 <= 99) ? Blackboard.getBlackboard().getTileList().get(t.getIndex() + 1) : new Tile(-1);
-            //need to check if in different rows
 
-//            for(List<Integer> ship: shipList){
-//                for(int tile: ship){
-//                    if(up.getIndex() == tile){
-//                        up.tileType = Tile.TileType.DEFAULT;
-//                    }
-//                    if(left.getIndex() == tile){
-//                        left.tileType = Tile.TileType.DEFAULT;
-//                    }
-//                    if(right.getIndex() == tile){
-//                        right.tileType = Tile.TileType.DEFAULT;
-//                    }
-//                    if(down.getIndex() == tile){
-//                        down.tileType = Tile.TileType.DEFAULT;
-//                    }
-//                }
-//            }
 
             //if nothing around ship tile, it is a standalone 1 square ship
             if ((up.tileType != Tile.TileType.SHIP || checkIfTileInShipList(shipList, up.getIndex())) &&
@@ -205,8 +177,10 @@ public class MyBoard extends BoardPanel implements ActionListener, MyObserver {
                 shipList.add(ship); // add to 2D list
                 shipTiles.remove(t); //remove from shipTiles to avoid seeing again
             }
+
             //vertical only ship, ASSUMES WE WILL SEE TOPMOST SHIP FIRST
             else if (down.tileType == Tile.TileType.SHIP) {
+
                 ArrayList<Integer> ship = new ArrayList<>();
                 ship.add(t.getIndex());
                 shipTiles.remove(t);
@@ -242,6 +216,5 @@ public class MyBoard extends BoardPanel implements ActionListener, MyObserver {
         Blackboard.getBlackboard().setReadyToSendShips(true);
         return shipList;
     }
-
 
 }
