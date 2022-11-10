@@ -12,6 +12,9 @@ public class MyBoardController implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        myboard.actionPerformed(e);
+        if (e.getSource() instanceof Tile){
+            System.out.println(e.getSource());
+            myboard.placeShipPiece((Tile) e.getSource());
+        }
     }
 }

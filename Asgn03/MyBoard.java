@@ -15,7 +15,7 @@ import java.util.List;
  * @version 1.0
  * MyBoard - controls the logic behind placing ships and seeing where your opponent shoots on your board
  */
-public class MyBoard extends BoardPanel implements ActionListener, MyObserver {
+public class MyBoard extends BoardPanel implements MyObserver { //ActionListener,
     private int numShipTiles = 17;
     private final List<List<Integer>> shipList = new ArrayList<>();
     private final ArrayList<Tile> shipTiles = new ArrayList<>();
@@ -106,20 +106,10 @@ public class MyBoard extends BoardPanel implements ActionListener, MyObserver {
         return false;
     }
 
-    /**
-     * setting the ships for player 1
-     *
-     * @param e
-     */
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        if (e.getSource() instanceof Tile temp && numShipTiles >= 0) {
-            //prints out which tile was clicked
-            System.out.println(temp);
-
+    public void placeShipPiece(Tile t) {
+        if (numShipTiles >= 0) {
             //placing ships on the screen
-            if (((Tile) e.getSource()).tileType != Tile.TileType.SHIP && !Blackboard.getBlackboard().isGameOver()) {
-                Tile t = (Tile) e.getSource();
+            if (t.tileType != Tile.TileType.SHIP && !Blackboard.getBlackboard().isGameOver()) {
                 Blackboard.getBlackboard().getTileList().get(t.getIndex()).setTileType(Tile.TileType.SHIP);
                 numShipTiles -= 1;
                 System.out.println(Blackboard.getBlackboard().getTileList().get(t.getIndex()));
