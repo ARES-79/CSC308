@@ -56,6 +56,10 @@ public class Blackboard extends MyObservable {
         return myTileList;
     }
 
+    /**
+     * setMyTileList - setter method for myTileList which contains all the tiles on the board
+     * @param myTileList the list of tiles for MyBoard
+     */
     public void setMyTileList(List<Tile> myTileList) {
         this.myTileList = myTileList;
     }

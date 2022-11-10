@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 /**
  * Assignment 03
  * @author Andrew Estrada
+ * @author Jamie Luna
  * @version 2.0
  * MyBoardController - connects the GUI buttons with the model for the ship placement board
  */

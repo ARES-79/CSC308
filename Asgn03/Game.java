@@ -6,6 +6,7 @@ import java.awt.*;
 /**
  * Assignment 03
  * @author Andrew Estrada
+ * @author Jamie Luna
  * @version 1.0
  * Game Class - battleship app with GUI and functionality
  */
