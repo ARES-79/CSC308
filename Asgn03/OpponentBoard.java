@@ -24,27 +24,28 @@ public class OpponentBoard extends BoardPanel implements ActionListener, MyObser
      * OpponentBoard constructor - sets up the game panel
      */
     public OpponentBoard() {
-        setLayout(new GridLayout(11,11, -1, -1));
-        setBorder(BorderFactory.createEmptyBorder(2,2,2,2));
-        Blackboard.getBlackboard().addObserver(this);
-
-        add(new JLabel(""));
-        int value = 0;
-        for( int i = 1; i<121; i++) {
-            if (i < 11){
-                add(new JLabel("     " + i));
-            }
-            else if (i % 11 == 0){
-                int alpha = (i%10 == 0) ? 10 : i%10;
-                add(new JLabel("   " + (char) (alpha + 64)));
-            }
-            else{
-                enemyWaters.add(new Tile(value));
-                add(enemyWaters.get(enemyWaters.size() -1));
-                enemyWaters.get(enemyWaters.size() -1).addActionListener(this);
-                value +=1;
-            }
-        }
+        super("OpponentBoard");
+//        setLayout(new GridLayout(11,11, -1, -1));
+//        setBorder(BorderFactory.createEmptyBorder(2,2,2,2));
+//        Blackboard.getBlackboard().addObserver(this);
+//
+//        add(new JLabel(""));
+//        int value = 0;
+//        for( int i = 1; i<121; i++) {
+//            if (i < 11){
+//                add(new JLabel("     " + i));
+//            }
+//            else if (i % 11 == 0){
+//                int alpha = (i%10 == 0) ? 10 : i%10;
+//                add(new JLabel("   " + (char) (alpha + 64)));
+//            }
+//            else{
+//                enemyWaters.add(new Tile(value));
+//                add(enemyWaters.get(enemyWaters.size() -1));
+//                enemyWaters.get(enemyWaters.size() -1).addActionListener(this);
+//                value +=1;
+//            }
+//        }
     }
 
     /**
