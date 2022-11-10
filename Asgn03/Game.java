@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  * Assignment 03
- * @author Andrew Estrada
+ * @author Andrew Estrada, Mitashi Parikh
  * @version 1.0
  * Game Class - battleship app with GUI and functionality
  */
