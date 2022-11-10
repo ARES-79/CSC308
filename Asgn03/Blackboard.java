@@ -9,7 +9,8 @@ import java.util.List;
 /**
  * Assignment 03
  * @author Mitashi Parikh
- * ...
+ * @author Archie Jones
+ * @author Andrew Estrada
  * @version 1.0
  * Blackboard Class - the blackboard for the blackboard pattern
  *          Is the central location for accessing data and is observervable

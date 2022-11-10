@@ -8,6 +8,7 @@ import java.util.List;
  * Assignment 03
  * @author Jamie Luna
  * @author Andrew Estrada
+ * @author Mitashi Parikh
  * @version 2.0
  * MyBoard - controls the logic behind placing ships and seeing where your opponent shoots on your board
  */

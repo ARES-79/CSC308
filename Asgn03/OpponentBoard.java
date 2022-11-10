@@ -7,6 +7,7 @@ import java.util.ArrayList;
 /**
  * Assignment 03
  * @author Andrew Estrada
+ * @author Mitashi Parikh
  * @version 1.0
  * OpponentBoard - class in charge of functionality of attempting to shoot the opponent
  */
