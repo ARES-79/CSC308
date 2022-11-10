@@ -10,8 +10,17 @@ public class OpponentBoardController implements ActionListener {
         this.opponentBoard = opponentBoard;
     }
 
+    /**
+     * actionPerformed - implementation from ActionListener interface
+     *      provides functionality for tile objects within the opponent board
+     * @param e - ActionEvent notifying that a screen item has been selected
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
-        opponentBoard.actionPerformed(e);
+        if (e.getSource() instanceof Tile && Blackboard.getBlackboard().isMyTurn() && Blackboard.getBlackboard().isReceivedShips()
+                && Blackboard.getBlackboard().isSentShips() && !Blackboard.getBlackboard().isGameOver()) {
+            System.out.println(e.getSource());
+            opponentBoard.shootTile((Tile) e.getSource());
+        }
     }
 }

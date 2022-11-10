@@ -1,9 +1,5 @@
 package Asgn03;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.List;
 import java.util.ArrayList;
@@ -14,9 +10,9 @@ import java.util.ArrayList;
  * @version 1.0
  * OpponentBoard - class in charge of functionality of attempting to shoot the opponent
  */
-public class OpponentBoard extends BoardPanel implements ActionListener, MyObserver {
+public class OpponentBoard extends BoardPanel implements MyObserver { //ActionListener
 
-    List<Tile> enemyWaters = new ArrayList<>();
+    List<Tile> enemyWaters;
     List<Ship> enemyShips = new ArrayList<>();
     boolean updated = false;
 
@@ -75,59 +71,51 @@ public class OpponentBoard extends BoardPanel implements ActionListener, MyObser
         }
     }
 
-    /**
-     * actionPerformed - implementation from ActionListener interface
-     *      provides functionality for tile objects within the board
-     * @param e - ActionEvent notifying that a screen item has been selected
-     */
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        if (e.getSource() instanceof Tile && Blackboard.getBlackboard().isMyTurn() && Blackboard.getBlackboard().isReceivedShips()
-        && Blackboard.getBlackboard().isSentShips() && !Blackboard.getBlackboard().isGameOver()) {
-            Tile temp = (Tile) e.getSource();
-            if (temp.getShot() == Tile.ShotType.DEFAULT){
-                Blackboard.getBlackboard().setShotIndex(temp.getIndex());
-                Ship hit = checkAllShips(temp.getIndex());
-                if (hit == null){
-                    temp.setShot(Tile.ShotType.MISS);
-                    temp.updateView();
+
+    public void shootTile(Tile temp) {
+        if (temp.getShot() == Tile.ShotType.DEFAULT){
+            Blackboard.getBlackboard().setShotIndex(temp.getIndex());
+            Ship hit = checkAllShips(temp.getIndex());
+            if (hit == null){
+                temp.setShot(Tile.ShotType.MISS);
+                temp.updateView();
+                Blackboard.getBlackboard().setMyTurn(false);
+                Blackboard.getBlackboard().getStatus().setText("Opponents turn");
+                try {
+                    ServerDTO data = new ServerDTO(Tile.ShotType.MISS.toString(), temp.getIndex(), null);
+                    Blackboard.getBlackboard().getClient().sendObject(data);
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+            }
+            else{
+                temp.setShot(Tile.ShotType.HIT);
+                temp.updateView();
+                if(this.checkWinV2()){
+                    Blackboard.getBlackboard().getStatus().setText("You Win!");
+                    Blackboard.getBlackboard().setGameOver(true);
+                    try {
+                        ServerDTO data = new ServerDTO("Game over", temp.getIndex(), null);
+                        Blackboard.getBlackboard().getClient().sendObject(data);
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
+                }else {
                     Blackboard.getBlackboard().setMyTurn(false);
                     Blackboard.getBlackboard().getStatus().setText("Opponents turn");
                     try {
-                        ServerDTO data = new ServerDTO(Tile.ShotType.MISS.toString(), temp.getIndex(), null);
+                        ServerDTO data = new ServerDTO(Tile.ShotType.HIT.toString(), temp.getIndex(), null);
                         Blackboard.getBlackboard().getClient().sendObject(data);
                     } catch (IOException ex) {
                         ex.printStackTrace();
                     }
                 }
-                else{
-                    temp.setShot(Tile.ShotType.HIT);
-                    temp.updateView();
-                    if(this.checkWinV2()){
-                        Blackboard.getBlackboard().getStatus().setText("You Win!");
-                        Blackboard.getBlackboard().setGameOver(true);
-                        try {
-                            ServerDTO data = new ServerDTO("Game over", temp.getIndex(), null);
-                            Blackboard.getBlackboard().getClient().sendObject(data);
-                        } catch (IOException ex) {
-                            ex.printStackTrace();
-                        }
-                    }else {
-                        Blackboard.getBlackboard().setMyTurn(false);
-                        Blackboard.getBlackboard().getStatus().setText("Opponents turn");
-                        try {
-                            ServerDTO data = new ServerDTO(Tile.ShotType.HIT.toString(), temp.getIndex(), null);
-                            Blackboard.getBlackboard().getClient().sendObject(data);
-                        } catch (IOException ex) {
-                            ex.printStackTrace();
-                        }
-                    }
-                    if (hit.checkSunk()){
-                        shipSunk(hit);
-                    }
+                if (hit.checkSunk()){
+                    shipSunk(hit);
                 }
             }
         }
+
     }
 
     /**
