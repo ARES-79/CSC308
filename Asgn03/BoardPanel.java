@@ -17,7 +17,7 @@ import java.util.List;
  * @version 1.0
  * BoardPanel - Abstraction to create hierarchy for different Board objects.
  */
-public class BoardPanel extends JPanel implements MyObserver { //implements MouseEvent
+public class BoardPanel extends JPanel implements MyObserver {
     MyBoardController myBoardController = new MyBoardController();
     OpponentBoardController opponentBoardController = new OpponentBoardController();
     List<Tile> genericList = new ArrayList<>();

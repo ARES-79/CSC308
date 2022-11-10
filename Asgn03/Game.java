@@ -2,11 +2,6 @@ package Asgn03;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Assignment 03
@@ -14,7 +9,7 @@ import java.util.List;
  * @version 1.0
  * Game Class - battleship app with GUI and functionality
  */
-public class Game extends JFrame implements ActionListener {
+public class Game extends JFrame {
     private String Player;
 
     /**
@@ -36,7 +31,8 @@ public class Game extends JFrame implements ActionListener {
 
         menuBar.add(edit);
         edit.add(reset);
-        reset.addActionListener(this);
+        GameController gc = new GameController();
+        reset.addActionListener(gc);
 
         //center
         setLayout(new BorderLayout());
@@ -69,26 +65,6 @@ public class Game extends JFrame implements ActionListener {
      */
     public String getPlayer() {
         return Player;
-    }
-
-    /**
-     * actionPerformed - implementation from ActionListener interface
-     *      provides interactivity for the Reset menu item elements
-     *      also logs the request to reset
-     * @param e ActionEvent notifying that a screen item has been selected
-     */
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        if (e.getActionCommand().equals("Reset")) {
-            Blackboard blackboard = Blackboard.getBlackboard();
-            ServerDTO transfer = new ServerDTO("Reset", -1, null);
-            try {
-                blackboard.getClient().sendObject(transfer);
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-            blackboard.reset();
-        }
     }
 
 }

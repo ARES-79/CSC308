@@ -1,9 +1,5 @@
 package Asgn03;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.*;
 import java.util.List;
@@ -27,26 +23,6 @@ public class MyBoard extends BoardPanel implements MyObserver { //ActionListener
         super("MyBoard");
         Blackboard.getBlackboard().setMyTileList(super.getGenericList());
         super.getMyBoardController().setMyboard(this);
-//        Blackboard.getBlackboard().addObserver(this);
-//        setLayout(new GridLayout(11, 11, -1, -1));
-//        setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2));
-//        Blackboard.getBlackboard().addObserver(this);
-//
-//        add(new JLabel(""));
-//        int value = 0;
-//        for (int i = 1; i < 121; i++) {
-//            if (i < 11) {
-//                add(new JLabel("     " + i));
-//            } else if (i % 11 == 0) {
-//                int alpha = (i % 10 == 0) ? 10 : i % 10;
-//                add(new JLabel("   " + (char) (alpha + 64)));
-//            } else {
-//                Blackboard.getBlackboard().addTile(new Tile(value));
-//                add(Blackboard.getBlackboard().getTileList().get(Blackboard.getBlackboard().getTileList().size() - 1));
-//                Blackboard.getBlackboard().getTileList().get(Blackboard.getBlackboard().getTileList().size() - 1).addActionListener(this);
-//                value += 1;
-//            }
-//        }
     }
 
     /**
